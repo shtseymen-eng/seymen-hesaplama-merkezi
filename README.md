@@ -16,6 +16,7 @@ Windows masaüstü ve web üzerinden çalışacak; litre-tonaj, tonaj-litre ve f
 
 - Kaynak Excel tablolarındaki içerik ve hesaplama formülleri korunacaktır.
 - Formüller arka planda otomatik çalışacak; kullanıcı yalnızca giriş değerlerini değiştirecektir.
+- Dolum oranı alanlarında `%` işareti gösterilecek; kullanıcı `0,95` yerine `95` girecek ve sistem hesaplamada otomatik olarak `0,95` oranını kullanacaktır.
 - Masaüstü uygulaması ürün ve geçmiş verilerinin ana yönetim merkezidir.
 - Masaüstünde yapılan değişiklikler web sistemine tek yönlü aktarılacaktır.
 - Web hesaplama ve ürün ekranları herkese açık, geçmiş ekranı parola korumalı ve salt okunur olacaktır.

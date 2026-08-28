@@ -38,6 +38,7 @@ Uygulama, kaynak Excel dosyalarının okunaklı tablo dilini koruyarak modern bi
 - Sol tarafta sabit menü, sağ tarafta seçili ekran bulunur.
 - Başlıklar Excel’deki koyu mavi görsel dili izler.
 - Düzenlenebilir giriş alanları açık sarı renkle belirtilir.
+- **Litre - Tonaj** ve **Tonaj - Litre** ekranlarındaki dolum oranı alanının başında `%` işareti gösterilir. Kullanıcı `0,95` yerine `95` yazar; arayüz bu değeri mevcut Excel hesabına göndermeden önce `95 ÷ 100 = 0,95` oranına dönüştürür.
 - Otomatik hesaplanan sonuçlar açık yeşil renkle ve salt okunur olarak gösterilir.
 - Durum ve önemli toplam satırları kaynak tablodaki vurgu renklerini korur.
 - Kullanıcı bir giriş değerine tıkladığında yalnızca o değer düzenlenir; formül hiçbir ekranda düzenlenemez.
@@ -86,7 +87,7 @@ Kaynak: `Litre ve Tonaj Hesaplama .xlsx`, `Hesap!A1:B11`.
 **Düzenlenebilir değerler:**
 
 - Tank Hacmi (L)
-- Dolum Oranı
+- Dolum Oranı (%) — kullanıcı örneğin `95` girer
 - Ürün Seçimi
 - ADR Max (ton)
 
@@ -98,7 +99,7 @@ Kaynak: `Litre ve Tonaj Hesaplama .xlsx`, `Hesap!A1:B11`.
 - Yüklenebilir (ton) = Yüklenebilir (kg) ÷ 1000
 - Durum = Yüklenebilir (ton) > ADR Max ise `ASIM VAR`, değilse `UYGUN`
 
-Kaynak dosyadaki `ASIM VAR` metni Türkçe karakter eklenmeden aynen korunur.
+Arayüzde girilen dolum yüzdesi formül çalışmadan önce 100’e bölünür; kaynak formüldeki **Dolum Oranı** değeri yine `0,95` olarak kullanılır. Kaynak dosyadaki `ASIM VAR` metni Türkçe karakter eklenmeden aynen korunur.
 
 ### 4.2. Tonaj - Litre
 
@@ -107,7 +108,7 @@ Kaynak: `Litre ve Tonaj Hesaplama .xlsx`, `Hesap!D1:E10`.
 **Düzenlenebilir değerler:**
 
 - Ürün Seçimi
-- Dolum Oranı
+- Dolum Oranı (%) — kullanıcı örneğin `95` girer
 - Yüklenmek İstenen Tonaj
 - ADR Max (ton)
 
@@ -118,7 +119,7 @@ Kaynak: `Litre ve Tonaj Hesaplama .xlsx`, `Hesap!D1:E10`.
 - Gerekli Tank Hacmi (L) = Gerekli Net Hacim ÷ Dolum Oranı
 - Durum = Yüklenmek İstenen Tonaj > ADR Max ise `AŞIM VAR`, değilse `UYGUN`
 
-Alan adı, birimi ve formülü kaynak dosyada olduğu gibi korunur; uygulama bu formül üzerinde düzeltme veya yorum değişikliği yapmaz.
+Arayüzde girilen dolum yüzdesi formül çalışmadan önce 100’e bölünür; kaynak formüldeki **Dolum Oranı** değeri yine `0,95` olarak kullanılır. Alan adı, birimi ve formülü kaynak dosyada olduğu gibi korunur; uygulama bu formül üzerinde düzeltme veya yorum değişikliği yapmaz.
 
 ### 4.3. Fire Hesaplama
 
@@ -235,7 +236,7 @@ Veri akışı yalnızca aşağıdaki yöndedir:
 
 - Geçersiz hesap girdileri alan bazında açıklanır ve geçerli sonuç üretilmez.
 - Ürün yoğunluğu bulunamazsa hesaplama durur ve kullanıcıdan geçerli ürün seçmesi istenir.
-- Dolum oranı sıfır veya negatif olamaz; sıfıra bölme engellenir.
+- Dolum oranı arayüzde `%1` ile `%100` arasında girilir; sistem hesaplamadan önce değeri 100’e böler ve sıfıra bölmeyi engeller.
 - Negatif hacim, tonaj, yoğunluk, ADR limiti veya fire oranı kabul edilmez.
 - Geliş tarihi güncel tarihten sonraysa fire hesabı yapılmaz.
 - Masaüstünde yerel kaydetme başarısız olursa kullanıcıya açık hata gösterilir; kayıt yapılmış gibi bildirim verilmez.
@@ -286,6 +287,7 @@ Masaüstü ve web aynı hesaplama paketini ve mümkün olan en geniş ölçüde 
 - Menü sırası ve adları doğrulanır.
 - Yalnızca giriş alanlarının düzenlenebilir olduğu doğrulanır.
 - Girdi değiştiğinde sonuçların otomatik hesaplandığı doğrulanır.
+- Her iki dolum oranı alanında `%` ön eki ve varsayılan `95` değeri bulunduğu; `95` girişinin hesap motoruna `0,95` olarak aktarıldığı doğrulanır.
 - Masaüstü ve web yetki farkları uçtan uca test edilir.
 - Her ekranın sarı marka bandında mavi `SEYMEN` etiketi ile **Ş. Melih KARABAY için özenle hazırlanmıştır.** notunun bulunduğu doğrulanır.
 - Beş ekranın her birinde doğru yerel görselin, Türkçe alternatif açıklamanın ve kaynak kaydının bulunduğu doğrulanır.
@@ -333,3 +335,4 @@ Masaüstü ve web aynı hesaplama paketini ve mümkün olan en geniş ölçüde 
 12. Beş ana ekranda ilgili, yerel paketlenmiş ve kaynak bilgisi kayıtlı görseller bulunur; geçmiş ekranında filtrelerle uyumlu rapor kartları ve grafik gösterilir.
 13. Web hesaplama ve ürün ekranları herkese açıktır; geçmiş içeriği yalnızca parola doğrulamasından sonra salt okunur açılır.
 14. Windows kurulum paketi herkese açık web veya GitHub sürümünden indirilemez; yalnızca yetkilendirilmiş dağıtım kanalında bulunur.
+15. Kullanıcı her iki dolum oranı alanına `%` işaretiyle birlikte `95` yazar; hesaplama mevcut Excel formülünde `0,95` oranını kullanır.
