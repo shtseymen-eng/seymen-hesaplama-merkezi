@@ -7,7 +7,7 @@
 
 İki kaynak Excel dosyasındaki tablo içeriklerini, ürün listesini ve hesaplama formüllerini değiştirmeden kullanan bir Windows masaüstü uygulaması ve web uygulaması geliştirilecektir.
 
-Masaüstü uygulaması ana yönetim uygulamasıdır. Ürün ve hesaplama geçmişi üzerinde değişiklik yapabilir, internet olmadığında çalışmaya devam eder ve değişiklikleri internet geldiğinde web sistemine tek yönlü olarak aktarır. Web uygulaması mevcut ürünlerle hesaplama yapar ve masaüstünden gönderilen verileri salt okunur olarak görüntüler; ürünleri, formülleri veya geçmişi değiştiremez.
+Masaüstü uygulaması ana yönetim uygulamasıdır. Ürün ve hesaplama geçmişi üzerinde kalıcı değişiklik yapabilir, internet olmadığında çalışmaya devam eder ve değişiklikleri internet geldiğinde web sistemine tek yönlü olarak aktarır. Web uygulaması mevcut ürünlerle hesaplama yapar ve masaüstünden gönderilen ana verileri görüntüler. Parola doğrulayan kullanıcı, yalnızca açık tarayıcı sekmesinde geçerli olacak biçimde ürün verileri üzerinde geçici ekleme, düzenleme ve silme yapabilir; bu değişiklikler aynı sekmedeki hesaplamalara anında yansır, sunucuya veya masaüstüne yazılmaz ve sekme kapanınca kaybolur. Excel formülleri hiçbir platformda düzenlenemez.
 
 ## 2. Kesin Menü Yapısı
 
@@ -22,9 +22,9 @@ Sol menüde seçenekler aşağıdaki sırayla ve metinlerle gösterilecektir:
 Masaüstü ve web aynı menü sırasını kullanır. Yetki farkları ekranların içinde uygulanır:
 
 - Masaüstündeki **Ürünler** ekranında ekleme, düzenleme, kaydetme ve silme bulunur.
-- Web’deki **Ürünler** ekranı salt okunurdur; değiştirme düğmeleri gösterilmez.
+- Web’deki **Ürünler** ekranı başlangıçta salt okunurdur. Parola doğrulandığında aynı sekme için geçici ekleme, düzenleme ve silme düğmeleri gösterilir.
 - Masaüstündeki **Geçmiş Hesaplamalar** ekranında ayrıntı görüntüleme ve silme bulunur.
-- Web’deki **Geçmiş Hesaplamalar** ekranı salt okunurdur.
+- Web’deki **Geçmiş Hesaplamalar** ekranı parola doğrulandıktan sonra salt okunur açılır.
 
 ## 3. Görsel ve Etkileşim Tasarımı
 
@@ -43,6 +43,8 @@ Uygulama, kaynak Excel dosyalarının okunaklı tablo dilini koruyarak modern bi
 - Durum ve önemli toplam satırları kaynak tablodaki vurgu renklerini korur.
 - Kullanıcı bir giriş değerine tıkladığında yalnızca o değer düzenlenir; formül hiçbir ekranda düzenlenemez.
 - Geçerli bir değer değiştiğinde sonuçlar düğmeye basılmasını beklemeden anında yeniden hesaplanır.
+- Web’de parola ile açılan geçici yönetim modunda ürün adı ve yoğunluk değişiklikleri yalnızca ilgili sekmedeki hesaplamaları etkiler. Geçici durum, kalıcı masaüstü verisinden görsel olarak ayırt edilir.
+- Web üst çubuğunda **Yetkili Modu Aç** işlemi bulunur. Doğrulama sonrasında aynı yerde **Geçici Yetkili Modu** göstergesi ile **Oturumu Kapat** işlemi gösterilir; oturumu kapatmak parola bilgisini ve tüm geçici ürün değişikliklerini hemen temizler.
 - Hatalı veya eksik girişte eski/geçersiz sonuç gösterilmez; ilgili alanın altında kısa Türkçe hata mesajı gösterilir.
 - Masaüstünde çevrimdışı çalışma ve eşitleme durumu her ekranda küçük bir durum göstergesiyle belirtilir: **Eşitlendi**, **İnternet yok** veya **Bekleyen değişiklikler**.
 - Masaüstü genişliği daraltıldığında sol menü simgeli dar moda geçebilir; web küçük ekranlarda açılır/kapanır menü kullanır.
@@ -72,7 +74,7 @@ Unsplash görselleri Unsplash lisansı, Pexels görselleri Pexels lisansı altı
 - Son 30 gündeki günlük kayıt adetlerini gösteren sade çizgi/sütun grafik
 - En sık kullanılan ürünleri gösteren en fazla beş satırlık özet
 
-Bu özetler yalnızca kaydedilmiş geçmiş verilerinden türetilir; Excel formüllerine, hesap sonuçlarına veya ürün yoğunluklarına müdahale etmez. Masaüstünde filtre değiştiğinde kartlar ve grafik de aynı filtreyi izler. Web’de parola ile açılan salt okunur geçmişte aynı raporlar görüntülenebilir. Grafiklerin yanında sayısal karşılıkları bulunur; renk tek başına bilgi taşımaz.
+Bu özetler yalnızca kaydedilmiş geçmiş verilerinden türetilir; Excel formüllerine, hesap sonuçlarına veya ürün yoğunluklarına müdahale etmez. Masaüstünde filtre değiştiğinde kartlar ve grafik de aynı filtreyi izler. Web’de parola ile açılan salt okunur geçmişte aynı raporlar görüntülenebilir. Web’deki geçici ürün değişiklikleri daha önce kaydedilmiş geçmiş anlık görüntülerini değiştirmez. Grafiklerin yanında sayısal karşılıkları bulunur; renk tek başına bilgi taşımaz.
 
 ## 4. Hesaplama Motoru ve Formül Koruması
 
@@ -169,7 +171,9 @@ Masaüstünde:
 - Ürün adı boş olamaz ve büyük/küçük harf farkı gözetilmeden benzersiz olmalıdır.
 - Yoğunluk sıfırdan büyük geçerli bir sayı olmalıdır.
 
-Web’de aynı liste aranabilir ve görüntülenebilir ancak hiçbir kayıt değiştirilemez. Litre - Tonaj ve Tonaj - Litre ekranlarındaki ürün seçicileri bu listedeki aktif ürünleri alfabetik olarak gösterir. Bir ürün güncellendiğinde veya silindiğinde yeni hesaplamalarda güncel liste kullanılır; geçmiş kayıtların ürün adı ve yoğunluk anlık görüntüsü değişmez.
+Web’de aynı liste aranabilir ve görüntülenebilir. Parola doğrulanmadığında değiştirme işlemleri gösterilmez. Parola doğrulandığında kullanıcı açık sekmede geçerli olmak üzere ürün ekleyebilir, düzenleyebilir veya silebilir. Bu geçici ürün katmanı tarayıcının `sessionStorage` alanında tutulur; web veritabanına, API’ye veya masaüstüne gönderilmez. Geçici ekleme, düzenleme ve silmeler aynı sekmedeki Litre - Tonaj ve Tonaj - Litre ürün seçicilerine ve yeni hesaplamalara anında yansır. Sekme kapatıldığında geçici ürün katmanı ve yetki bilgisi silinir; uygulama yeniden açıldığında masaüstünden gelen ana liste yüklenir.
+
+Litre - Tonaj ve Tonaj - Litre ekranlarındaki ürün seçicileri o anda etkin olan listeyi alfabetik olarak gösterir. Bir ürün kalıcı olarak masaüstünden güncellendiğinde veya silindiğinde yeni web oturumları güncel ana listeyi kullanır. Geçici ya da kalıcı hiçbir ürün değişikliği geçmiş kayıtların ürün adı ve yoğunluk anlık görüntüsünü değiştirmez.
 
 ## 6. Geçmiş Hesaplamalar
 
@@ -190,14 +194,16 @@ Geçmiş ekranında:
 - Tarih aralığına, hesap türüne ve ürün adına göre filtreleme yapılabilir.
 - Bir satır açıldığında girişler ve sonuçlar kaynak tablo düzenine yakın bir ayrıntı görünümünde gösterilir.
 - Masaüstünde tek kayıt silinebilir; silme onay gerektirir.
-- Web’de masaüstünden eşitlenen kayıtlar görüntülenebilir ancak eklenemez, düzenlenemez veya silinemez.
+- Web’de masaüstünden eşitlenen kayıtlar parola doğrulamasından sonra görüntülenebilir ancak eklenemez, düzenlenemez veya silinemez.
 - Web’de yapılan anlık hesaplamalar geçmişe kaydedilmez ve masaüstü verisini değiştirmez.
 
 ## 7. Veri Sahipliği ve Tek Yönlü Eşitleme
 
 Veri akışı yalnızca aşağıdaki yöndedir:
 
-`Masaüstü yerel veritabanı → Güvenli API → Web veritabanı → Web salt-okunur ekranları`
+`Masaüstü yerel veritabanı → Güvenli API → Web veritabanı → Web ana veri ekranları`
+
+Web’in parola ile açılan geçici ürün katmanı bu akışın dışında ve yalnızca tarayıcı sekmesinde bulunur. Web’den masaüstüne veya web veritabanına yazma yolu oluşturmaz.
 
 ### 7.1. Masaüstü Yerel Verisi
 
@@ -217,20 +223,32 @@ Veri akışı yalnızca aşağıdaki yöndedir:
 ### 7.3. Web Verisi
 
 - Web ve API tarafında PostgreSQL kullanılır.
-- Web sadece okuma uçlarına erişir.
+- Web kalıcı ürün ve geçmiş verileri için sadece okuma uçlarına erişir.
 - Yazma uçları masaüstüne ait kimlik doğrulaması olmadan istek kabul etmez.
 - Web paketi içinde masaüstü yazma anahtarı veya yazma yetkisi bulunmaz.
+
+### 7.4. Web Geçici Yönetim Oturumu
+
+- Kullanıcı parolayı gönderdiğinde doğrulama sunucuda yapılır.
+- Başarılı doğrulama, yalnızca ilgili sekmenin `sessionStorage` alanında tutulan, en fazla sekiz saat geçerli imzalı bir yetki belirteci üretir.
+- Geçici ürün değişiklikleri ana veri kümesinin üzerine uygulanan bir sekme içi katmandır; sunucuya kaydedilmez.
+- Aynı sekme yenilendiğinde yetki ve geçici katman korunur.
+- Sekme veya tarayıcı kapatıldığında yetki ve geçici katman kaybolur. Uygulama tekrar açıldığında masaüstünden eşitlenen ana veri yeniden gösterilir.
+- Masaüstünden daha sonra gelen değişiklikler ana web verisini günceller. Açık yetkili sekmede aynı ürüne ait geçici değişiklik sekme kapanana kadar önceliklidir; diğer ana veri güncellemeleri normal biçimde görünür. Yeni web oturumlarında her zaman son masaüstü verisi esas alınır.
 
 ## 8. Yetkilendirme ve Güvenlik
 
 - Masaüstü uygulaması, eşitleme API’sine ait yazma kimliğini işletim sisteminin güvenli kimlik bilgisi alanında saklar.
 - Web’deki **Litre - Tonaj**, **Tonaj - Litre**, **Fire Hesaplama** ve **Ürünler** ekranları herkes tarafından hesap açmadan kullanılabilir.
-- Web’deki **Geçmiş Hesaplamalar** menü seçeneği herkes tarafından görülür; içerik açılırken parola ile yetki doğrulaması istenir. Yetki alan kullanıcı geçmişi ve rapor özetlerini yalnızca okuyabilir.
-- Geçmiş erişimi kısa süreli güvenli oturum çereziyle korunur; parola tarayıcıya, masaüstü paketine veya kaynak koda açık metin olarak yerleştirilmez.
-- Web ziyaretçisi ürün, formül ve geçmiş bakımından salt okunur role sahiptir.
+- Web’deki **Geçmiş Hesaplamalar** menü seçeneği herkes tarafından görülür; içerik açılırken parola ile yetki doğrulaması istenir. Aynı parola webdeki geçici ürün yönetim modunu da açar.
+- Parola sunucuda ortam değişkeni üzerinden doğrulanır; tarayıcıya, masaüstü paketine, GitHub deposuna veya kaynak koda açık metin olarak yerleştirilmez.
+- Başarılı doğrulamada sunucunun imzaladığı kısa ömürlü belirteç sekmenin `sessionStorage` alanında tutulur. Geçmiş okuma isteklerinde belirteç sunucuda yeniden doğrulanır.
+- Parolasız web ziyaretçisi ürün, formül ve geçmiş bakımından salt okunur role sahiptir; geçmiş içeriğini göremez.
+- Parolalı web ziyaretçisi yalnızca kendi açık sekmesinde geçici ürün değişiklikleri yapabilir. Formül ve kalıcı geçmiş verisi bakımından salt okunur kalır.
 - API, istemciden gelen sayısal değerleri ve metinleri yeniden doğrular.
-- Ürün veya geçmiş verisi için web tarayıcısından yazma isteği gönderilse bile sunucu bunu reddeder.
-- İlk sürümde kullanıcı/rol yönetim ekranı bulunmaz; masaüstü yazma rolü ve web salt-okunur rolü sabittir.
+- Ürün veya geçmiş verisi için web tarayıcısından kalıcı yazma isteği gönderilse bile sunucu bunu reddeder.
+- Parola denemeleri IP ve tarayıcı oturumu temelinde hız sınırına tabi tutulur; 15 dakika içinde beş başarısız denemeden sonra yeni deneme geçici olarak engellenir. Hata mesajı parolanın hangi kısmının yanlış olduğunu açıklamaz.
+- İlk sürümde kullanıcı/rol yönetim ekranı bulunmaz; masaüstü kalıcı yazma rolü, web misafir rolü ve sekmeye bağlı geçici web yetkisi sabittir.
 
 ## 9. Hata ve Bağlantı Davranışı
 
@@ -242,6 +260,7 @@ Veri akışı yalnızca aşağıdaki yöndedir:
 - Masaüstünde yerel kaydetme başarısız olursa kullanıcıya açık hata gösterilir; kayıt yapılmış gibi bildirim verilmez.
 - Eşitleme başarısızlığı yerel çalışmayı engellemez; durum **Bekleyen değişiklikler** olarak kalır.
 - Web API’ye erişemezse son başarılı okuma zamanı gösterilir ve veri güncelliği açıkça belirtilir.
+- Web geçici yönetim oturumu doğrulanamaz veya süresi dolarsa yönetim düğmeleri kapanır; geçici katman temizlenir ve masaüstünden gelen ana veriye dönülür.
 
 ## 10. Teknik Mimari
 
@@ -254,6 +273,8 @@ Tek depo içinde aşağıdaki birimler bulunacaktır:
 - `packages/ui`: Masaüstü ve web tarafından paylaşılan menü, tablo, form ve geçmiş bileşenleri
 - `packages/contracts`: Ürün, geçmiş, eşitleme ve API veri sözleşmeleri
 - `packages/test-fixtures`: Excel kaynaklarından çıkarılan doğrulama örnekleri
+
+Web uygulamasında ayrıca sunucu doğrulamalı geçici yetki belirteci ve `sessionStorage` tabanlı ürün üst-katmanı bulunur. Bu katman ortak hesaplama paketine yalnızca etkin ürün listesini verir; formül koduna veya kalıcı API uçlarına erişmez.
 
 Ana teknoloji seçimi:
 
@@ -280,7 +301,8 @@ Masaüstü ve web aynı hesaplama paketini ve mümkün olan en geniş ölçüde 
 - Ürün ekleme, düzenleme, silme ve doğrulama test edilir.
 - Geçmiş kaydetme, filtreleme, ayrıntı görüntüleme ve silme test edilir.
 - Çevrimdışı kuyruk, yeniden deneme, mükerrer istek ve silme aktarımı test edilir.
-- Web’in yazma uçlarına erişemediği otomatik yetki testleriyle doğrulanır.
+- Web’in kalıcı yazma uçlarına erişemediği otomatik yetki testleriyle doğrulanır.
+- Geçici ürün katmanının API’ye gönderilmediği, masaüstü verisini değiştirmediği ve yeni sekmede bulunmadığı doğrulanır.
 
 ### 11.3. Arayüz Testleri
 
@@ -294,7 +316,10 @@ Masaüstü ve web aynı hesaplama paketini ve mümkün olan en geniş ölçüde 
 - Görseller yüklenemese bile hesap alanlarının ve sonuçların eksiksiz çalıştığı doğrulanır.
 - Geçmiş rapor kartları ve grafiklerinin aktif filtrelerle aynı kayıt kümesini kullandığı doğrulanır.
 - Herkese açık web hesaplama sayfalarının giriş istemediği, geçmiş içeriğinin ise yetkisiz kullanıcıya açılmadığı doğrulanır.
-- Web arayüzünün ürün, geçmiş veya formül verisini değiştiremediği güvenlik testleriyle doğrulanır.
+- Doğru parola ile geçici ürün yönetiminin açıldığı; yanlış parola ile açılmadığı doğrulanır.
+- Geçici ürün ekleme, düzenleme ve silmelerinin aynı sekmedeki ürün seçicilerine ve hesap sonuçlarına anında yansıdığı doğrulanır.
+- Aynı sekme yenilendiğinde geçici durumun korunduğu, yeni sekmede veya sekme kapatılıp yeniden açıldığında masaüstünden gelen ana veriye dönüldüğü doğrulanır.
+- Web arayüzünün geçmişi, formülleri veya kalıcı ürün verisini değiştiremediği güvenlik testleriyle doğrulanır.
 - Windows EXE temiz bir Windows ortamında kurulum/açılış testiyle doğrulanır.
 
 ## 12. GitHub ve Dağıtım
@@ -311,7 +336,7 @@ Masaüstü ve web aynı hesaplama paketini ve mümkün olan en geniş ölçüde 
 
 ## 13. İlk Sürüm Dışında Kalanlar
 
-- Web’den ürün, formül veya geçmiş değiştirme
+- Web’den kalıcı ürün veya geçmiş değiştirme
 - Excel formülü düzenleme ekranı
 - Excel içe/dışa aktarma
 - Çoklu masaüstü yazma çatışması çözümü
@@ -324,15 +349,16 @@ Masaüstü ve web aynı hesaplama paketini ve mümkün olan en geniş ölçüde 
 1. Windows masaüstü uygulaması EXE/kurulum paketi olarak çalışır.
 2. Web uygulaması aynı beş menü seçeneğini aynı sırada gösterir.
 3. Hesaplama sayfaları kaynak Excel içerik ve formüllerini korur.
-4. Kullanıcı yalnızca giriş değerlerini değiştirebilir ve sonuçlar otomatik hesaplanır.
+4. Hesap ekranında kullanıcı yalnızca giriş değerlerini değiştirebilir ve sonuçlar otomatik hesaplanır; Excel formülleri hiçbir rolde düzenlenemez.
 5. Masaüstünde ürün CRUD işlemleri çevrimdışı çalışır.
-6. Web ürünleri salt okunur olarak görüntüler ve mevcut ürünlerle hesaplama yapar.
+6. Web, parolasız kullanımda ürünleri salt okunur görüntüler ve mevcut ürünlerle hesaplama yapar.
 7. Masaüstünde açıkça kaydedilen hesaplar geçmiş listesine eklenir.
 8. Masaüstü değişiklikleri internet geldiğinde web’e aktarılır.
-9. Web’den ürün, geçmiş veya formül değişikliği yapılamaz.
+9. Doğru parola webde yalnızca ilgili sekmeye ait geçici ürün ekleme, düzenleme ve silme işlemlerini açar; değişiklikler hesaplamalara anında yansır ancak sunucuya veya masaüstüne yazılmaz.
 10. Kaynak Excel örnekleriyle yapılan formül doğrulama testleri geçer.
 11. Masaüstü ve web’deki beş ekranın tamamında sarı bant üzerinde mavi `SEYMEN` etiketi ve altında **Ş. Melih KARABAY için özenle hazırlanmıştır.** notu görünür.
 12. Beş ana ekranda ilgili, yerel paketlenmiş ve kaynak bilgisi kayıtlı görseller bulunur; geçmiş ekranında filtrelerle uyumlu rapor kartları ve grafik gösterilir.
 13. Web hesaplama ve ürün ekranları herkese açıktır; geçmiş içeriği yalnızca parola doğrulamasından sonra salt okunur açılır.
 14. Windows kurulum paketi herkese açık web veya GitHub sürümünden indirilemez; yalnızca yetkilendirilmiş dağıtım kanalında bulunur.
 15. Kullanıcı her iki dolum oranı alanına `%` işaretiyle birlikte `95` yazar; hesaplama mevcut Excel formülünde `0,95` oranını kullanır.
+16. Aynı sekme yenilendiğinde geçici yetki ve ürün değişiklikleri korunur; sekme kapatılıp uygulama tekrar açıldığında parola unutulur ve masaüstünden eşitlenen ana veriler geri gelir.
