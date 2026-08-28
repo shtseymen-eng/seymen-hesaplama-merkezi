@@ -40,3 +40,12 @@ Kalıcı ürün verisinin merkezi masaüstü uygulaması olacaktır.
 - Sayfa yenilenirse aynı sekmede korunur.
 - Sekme kapanınca veya `Oturumu Kapat` seçilince yetki ve geçici değişiklikler silinir.
 - Bu V1 statik prototiptir; üretim sürümünde parola doğrulaması sunucu tarafına taşınacaktır.
+
+## Fire V4
+- Ürünün ilk giriş tarihi ve fire hesaplama tarihi kullanıcı tarafından seçilir.
+- Toplam kalış süresi iki tarih arasından otomatik hesaplanır.
+- İlk 90 gün ve 90 gün sonrası süre ayrı gösterilir.
+- A ve B oranları kullanıcıya yüzde biçiminde gösterilir:
+  - `%0,40` -> hesaplamada `0,004`
+  - `%0,002` -> hesaplamada `0,00002`
+- Sonuç ekranında tarihler, süreler ve kullanılan oranlar birlikte görüntülenir.

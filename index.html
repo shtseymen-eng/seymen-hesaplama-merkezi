@@ -100,18 +100,22 @@
         <div class="card">
           <div class="card-title"><h2>Ek-11 Antrepo Fire Hesabı</h2><span class="pill">90+ gün bileşik hesap</span></div>
           <div class="form-grid">
-            <label>Ürünün Giriş Tarihi<input id="fEntryDate" type="date"></label>
-            <label>Hesaplama Tarihi<input id="fCalcDate" type="date"></label>
+            <label>Ürünün İlk Giriş Tarihi<input id="fEntryDate" type="date"></label>
+            <label>Fire Hesaplama Tarihi<input id="fCalcDate" type="date"></label>
             <label>Giriş Miktarı (kg)<input id="fEntry" type="number" value="1720206"></label>
             <label>90 Gün Sonu Kalan Miktar (kg)<input id="fRemaining" type="number" value="115000"></label>
-            <label>A Oranı - İlk 90 Gün<input id="fA" type="number" step="0.0001" value="0.004"></label>
-            <label>B Oranı - 90 Gün Sonrası Günlük<input id="fB" type="number" step="0.000001" value="0.00002"></label>
+            <label>İlk 90 Gün Fire Oranı (%)<input id="fA" type="number" step="0.01" value="0.40"></label>
+            <label>90 Gün Sonrası Günlük Fire Oranı (%)<input id="fB" type="number" step="0.001" value="0.002"></label>
             <label>Toplam Kalış Süresi (gün)<input id="fDays" type="number" readonly></label>
           </div>
-          <div id="fireDateSummary" class="date-summary">
-            <div><span>Giriş Tarihi</span><strong id="fEntryDateOut">-</strong></div>
+          <div id="fireDateSummary" class="date-summary fire-summary">
+            <div><span>İlk Giriş Tarihi</span><strong id="fEntryDateOut">-</strong></div>
             <div><span>Hesaplama Tarihi</span><strong id="fCalcDateOut">-</strong></div>
-            <div><span>Toplam Gün</span><strong id="fDaysOut">-</strong></div>
+            <div><span>Toplam Kalış Süresi</span><strong id="fDaysOut">-</strong></div>
+            <div><span>İlk 90 Gün Süresi</span><strong id="fFirstDaysOut">-</strong></div>
+            <div><span>90 Gün Sonrası Süre</span><strong id="fExtraDaysOut">-</strong></div>
+            <div><span>İlk 90 Gün Oranı</span><strong id="fARateOut">-</strong></div>
+            <div><span>90+ Günlük Oran</span><strong id="fBRateOut">-</strong></div>
           </div>
           <div class="result-grid five">
             <div><span>İlk 90 Gün Süre</span><strong id="fFirstDays">-</strong></div>
@@ -121,7 +125,7 @@
             <div class="featured"><span>Toplam İzin Verilebilir Fire (kg)</span><strong id="fTotalLoss">-</strong></div>
           </div>
           <div id="fireValidation" class="status hidden"></div>
-          <div class="formula-note">90 gün sonrası hesap: <b>Kalan × [1 − (1 − günlük B oranı)<sup>aşan gün</sup>]</b></div>
+          <div class="formula-note">90 gün sonrası hesap: <b>Kalan × [1 − (1 − günlük B oranı)<sup>aşan gün</sup>]</b><br><small>Oranlar ekranda yüzde olarak girilir; sistem hesaplamada otomatik olarak ondalık değere çevirir.</small></div>
           <button class="primary" id="fSave">Hesabı Geçmişe Kaydet</button>
         </div>
       </section>
