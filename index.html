@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>SEYMEN Hesaplama Merkezi</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="windowbar">
+      <div class="window-title"><span class="dots">● ● ●</span><b>SEYMEN Hesaplama Merkezi</b></div>
+      <div class="view-switch"><span>Görünüm:</span><button data-view="desktop">Masaüstü</button><button class="active" data-view="web">Web</button></div>
+    </header>
+
+    <section class="brandbar">
+      <div>
+        <div class="brand">SEYMEN</div>
+        <div class="subtitle">Ş. Melih KARABAY için özenle hazırlanmıştır.</div>
+      </div>
+      <div class="brand-actions">
+        <button id="authOpen" class="auth-open">Yetkili Modu Aç</button>
+        <button id="authLogout" class="auth-logout hidden">Oturumu Kapat</button>
+        <div id="syncBadge" class="sync-badge">☁ Eşitlendi</div>
+      </div>
+    </section>
+
+    <div id="sourceWarning" class="source-warning hidden">
+      <b>⚠ Hesaplama verilerinde hata olabilir.</b>
+      <span>2 kullanıcı verisi çekilmektedir.</span>
+      <small id="sourceWarningDetail"></small>
+    </div>
+
+    <div id="authModal" class="modal hidden">
+      <div class="modal-card">
+        <h3>Yetkili Modu</h3>
+        <p>Ürün ekleme, düzenleme ve silme kontrollerini açmak için şifreyi girin.</p>
+        <input id="authPassword" type="password" placeholder="Şifre">
+        <div id="authError" class="auth-error"></div>
+        <div class="modal-actions">
+          <button id="authCancel" class="secondary">Vazgeç</button>
+          <button id="authSubmit" class="primary">Giriş Yap</button>
+        </div>
+      </div>
+    </div>
+
+    <nav class="nav" id="mainNav">
+      <button class="active" data-page="litre-tonaj">◈ Litre - Tonaj</button>
+      <button data-page="tonaj-litre">⚖ Tonaj - Litre</button>
+      <button data-page="fire">％ Fire Hesaplama</button>
+      <button data-page="products">⬡ Ürünler</button>
+      <button data-page="history">◷ Geçmiş Hesaplamalar</button>
+    </nav>
+
+    <main>
+      <section id="page-litre-tonaj" class="page active">
+        <div class="hero"><div><h1>Litre - Tonaj</h1><p>Tank hacmi ve ürün yoğunluğuna göre güvenli yüklenebilir tonajı hesaplayın.</p></div></div>
+        <div class="card">
+          <div class="card-title"><h2>Litreden Tonaj Hesabı</h2><span class="pill">⚡ Otomatik hesaplama</span></div>
+          <div class="form-grid">
+            <label>Tank Hacmi (L)<input id="ltTank" type="number" value="26000"></label>
+            <label>Dolum Oranı<input id="ltFill" type="number" step="0.01" value="0.95"></label>
+            <label>Ürün Seçimi<select id="ltProduct"></select></label>
+            <label>ADR Max (ton)<input id="ltAdr" type="number" step="0.01" value="26"></label>
+          </div>
+          <div class="result-grid">
+            <div><span>Yoğunluk (kg/L)</span><strong id="ltDensity">-</strong></div>
+            <div><span>Güvenli Hacim (L)</span><strong id="ltSafeVolume">-</strong></div>
+            <div><span>Yüklenebilir (kg)</span><strong id="ltKg">-</strong></div>
+            <div><span>Yüklenebilir (ton)</span><strong id="ltTon">-</strong></div>
+          </div>
+          <div id="ltStatus" class="status"></div>
+          <button class="primary" id="ltSave">Hesabı Geçmişe Kaydet</button>
+        </div>
+      </section>
+
+      <section id="page-tonaj-litre" class="page">
+        <div class="hero"><div><h1>Tonaj - Litre</h1><p>Yüklenmek istenen tonaj için gerekli net ve toplam tank hacmini hesaplayın.</p></div></div>
+        <div class="card">
+          <div class="card-title"><h2>Tonajdan Litre Hesabı</h2><span class="pill">⚡ Otomatik hesaplama</span></div>
+          <div class="form-grid">
+            <label>Ürün Seçimi<select id="tlProduct"></select></label>
+            <label>Dolum Oranı<input id="tlFill" type="number" step="0.01" value="0.95"></label>
+            <label>Yüklenmek İstenen Tonaj (kg)<input id="tlKg" type="number" value="25000"></label>
+            <label>ADR Max (ton)<input id="tlAdr" type="number" step="0.01" value="26"></label>
+          </div>
+          <div class="result-grid">
+            <div><span>Yoğunluk (kg/L)</span><strong id="tlDensity">-</strong></div>
+            <div><span>Gerekli Net Hacim (L)</span><strong id="tlNet">-</strong></div>
+            <div><span>Gerekli Tank Hacmi (L)</span><strong id="tlTank">-</strong></div>
+            <div><span>Talep Tonajı</span><strong id="tlTon">-</strong></div>
+          </div>
+          <div id="tlStatus" class="status"></div>
+          <button class="primary" id="tlSave">Hesabı Geçmişe Kaydet</button>
+        </div>
+      </section>
+
+      <section id="page-fire" class="page">
+        <div class="hero"><div><h1>Fire Hesaplama</h1><p>İlk 90 gün fire oranı ve 90 gün sonrası günlük azalan bakiye yöntemiyle hesaplayın.</p></div></div>
+        <div class="card">
+          <div class="card-title"><h2>Ek-11 Antrepo Fire Hesabı</h2><span class="pill">90+ gün bileşik hesap</span></div>
+          <div class="form-grid">
+            <label>Giriş Miktarı (kg)<input id="fEntry" type="number" value="1720206"></label>
+            <label>A Oranı - İlk 90 Gün<input id="fA" type="number" step="0.0001" value="0.004"></label>
+            <label>B Oranı - 90 Gün Sonrası Günlük<input id="fB" type="number" step="0.000001" value="0.00002"></label>
+            <label>Toplam Kalış Süresi (gün)<input id="fDays" type="number" value="791"></label>
+            <label>90 Gün Sonu Kalan Miktar (kg)<input id="fRemaining" type="number" value="115000"></label>
+          </div>
+          <div class="result-grid five">
+            <div><span>İlk 90 Gün Süre</span><strong id="fFirstDays">-</strong></div>
+            <div><span>90 Gün Sonrası Gün</span><strong id="fExtraDays">-</strong></div>
+            <div><span>İlk 90 Gün Fire (kg)</span><strong id="fFirstLoss">-</strong></div>
+            <div><span>90+ Gün Ek Fire (kg)</span><strong id="fExtraLoss">-</strong></div>
+            <div class="featured"><span>Toplam İzin Verilebilir Fire (kg)</span><strong id="fTotalLoss">-</strong></div>
+          </div>
+          <div class="formula-note">90 gün sonrası hesap: <b>Kalan × [1 − (1 − günlük B oranı)<sup>aşan gün</sup>]</b></div>
+          <button class="primary" id="fSave">Hesabı Geçmişe Kaydet</button>
+        </div>
+      </section>
+
+      <section id="page-products" class="page">
+        <div class="hero"><div><h1>Ürünler</h1><p>Masaüstü ana verisinden web tarafına gelen ürün ve yoğunluk listesini görüntüleyin.</p></div></div>
+        <div class="card">
+          <div class="toolbar">
+            <input id="productSearch" placeholder="Ürün ara...">
+            <span id="productCount"></span>
+          </div>
+          <div id="productAdmin" class="product-admin hidden">
+            <div class="admin-grid">
+              <label>Ürün Adı<input id="adminName" type="text" placeholder="Ürün adı"></label>
+              <label>Yoğunluk (kg/L)<input id="adminDensity" type="number" step="0.0001" placeholder="0,0000"></label>
+            </div>
+            <div class="admin-actions">
+              <button id="adminAdd" class="primary">Ürün Ekle</button>
+              <button id="adminUpdate" class="secondary">Seçileni Güncelle</button>
+              <button id="adminDelete" class="danger">Seçileni Sil</button>
+            </div>
+            <div class="readonly-note">Bu değişiklikler yalnızca bu sekmede geçerlidir. Sekme kapanınca ana masaüstü verisi geri gelir.</div>
+          </div>
+          <div class="table-wrap"><table><thead><tr><th class="admin-col hidden">Seç</th><th>Ürün</th><th>Yoğunluk (kg/L)</th></tr></thead><tbody id="productRows"></tbody></table></div>
+          <div class="readonly-note">Web tarafında ürün listesi salt okunur. Kalıcı ana veri masaüstü uygulamasından yönetilecektir.</div>
+        </div>
+      </section>
+
+      <section id="page-history" class="page">
+        <div class="hero"><div><h1>Geçmiş Hesaplamalar</h1><p>Bu tarayıcıda kaydedilen son hesaplamaları görüntüleyin.</p></div></div>
+        <div class="card">
+          <div class="toolbar"><button class="danger" id="clearHistory">Geçmişi Temizle</button><span id="historyCount"></span></div>
+          <div class="table-wrap"><table><thead><tr><th>Tarih</th><th>Tür</th><th>Özet</th><th>Sonuç</th></tr></thead><tbody id="historyRows"></tbody></table></div>
+        </div>
+      </section>
+    </main>
+  </div>
+<script src="app.js"></script>
+</body>
+</html>

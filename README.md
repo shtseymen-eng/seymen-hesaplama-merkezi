@@ -1,32 +1,42 @@
-# SEYMEN Hesaplama Merkezi
+# SEYMEN Hesaplama Merkezi - Web V1
 
-Windows masaüstü ve web üzerinden çalışacak; litre-tonaj, tonaj-litre ve fire hesaplamalarını tek uygulamada birleştirecek proje.
+Bu sürüm ilk görsel/işlev kontrolü içindir.
 
-> **Ş. Melih KARABAY için özenle hazırlanmıştır.**
+## Açılış
+`index.html` dosyasını Chrome/Safari/Edge ile açın. Kurulum gerekmez.
 
-## Menü
+## Menüler
+- Litre - Tonaj
+- Tonaj - Litre
+- Fire Hesaplama
+- Ürünler
+- Geçmiş Hesaplamalar
 
-1. Litre - Tonaj
-2. Tonaj - Litre
-3. Fire Hesaplama
-4. Ürünler
-5. Geçmiş Hesaplamalar
+## Hesaplama kaynakları
+- `Litre ve Tonaj Hesaplama .xlsx`: ürün yoğunlukları ve litre/tonaj formülleri.
+- `ek11_fire_hesap_tablosuu.xlsx`: ilk 90 gün ve 90 gün sonrası bileşik fire formülü.
 
-## Temel Kurallar
+## Fire kuralı
+90 gün sonrası ek fire:
+`90 gün sonu kalan miktar × [1 - (1 - günlük B oranı) ^ aşan gün]`
 
-- Kaynak Excel tablolarındaki içerik ve hesaplama formülleri korunacaktır.
-- Formüller arka planda otomatik çalışacak; kullanıcı yalnızca giriş değerlerini değiştirecektir.
-- Dolum oranı alanlarında `%` işareti gösterilecek; kullanıcı `0,95` yerine `95` girecek ve sistem hesaplamada otomatik olarak `0,95` oranını kullanacaktır.
-- Masaüstü uygulaması ürün ve geçmiş verilerinin ana yönetim merkezidir.
-- Masaüstünde yapılan değişiklikler web sistemine tek yönlü aktarılacaktır.
-- Web hesaplama ve ürün ekranları herkese açık, geçmiş ekranı parola korumalı ve salt okunur olacaktır.
-- Windows kurulum paketi herkese açık yayınlanmayacak, yalnızca yetkili kişilerle paylaşılacaktır.
-- Her ekranda sarı bant üzerinde mavi **SEYMEN** etiketi bulunacaktır.
+Bu nedenle her gün fire, azalan kalan bakiye üzerinden devam eder.
 
-## Durum
+## Masaüstü bağlantısı
+Bu V1'de gerçek sunucu bağlantısı henüz yoktur. Ön yüz, `seymen_desktop_sources`
+kaynağını okuyacak şekilde hazırlanmıştır. Backend aşamasında masaüstü uygulaması bu
+kaynak durumunu sunucu üzerinden besleyecektir.
 
-Tasarım, mimari, yetkilendirme ve görsel yaklaşım onaylanmıştır. Ayrıntılı şartname:
+Birden fazla masaüstü kaynak algılanırsa web üst bölümünde:
+`Hesaplama verilerinde hata olabilir. 2 kullanıcı verisi çekilmektedir.`
+uyarısı görünür.
 
-- [`docs/superpowers/specs/2026-08-28-desktop-web-calculation-app-design.md`](docs/superpowers/specs/2026-08-28-desktop-web-calculation-app-design.md)
+Kalıcı ürün verisinin merkezi masaüstü uygulaması olacaktır.
 
-Uygulama kodu, testler ve Windows kurulum paketi sonraki geliştirme aşamalarında bu depoya eklenecektir.
+## Yetkili Modu
+- Ürünler sayfasında `Yetkili Modu Aç` düğmesi vardır.
+- Doğru şifre girildiğinde ürün ekleme, düzenleme ve silme kontrolleri açılır.
+- Yetki ve geçici ürün değişiklikleri yalnızca açık sekmede tutulur (`sessionStorage`).
+- Sayfa yenilenirse aynı sekmede korunur.
+- Sekme kapanınca veya `Oturumu Kapat` seçilince yetki ve geçici değişiklikler silinir.
+- Bu V1 statik prototiptir; üretim sürümünde parola doğrulaması sunucu tarafına taşınacaktır.
