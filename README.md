@@ -49,3 +49,13 @@ Kalıcı ürün verisinin merkezi masaüstü uygulaması olacaktır.
   - `%0,40` -> hesaplamada `0,004`
   - `%0,002` -> hesaplamada `0,00002`
 - Sonuç ekranında tarihler, süreler ve kullanılan oranlar birlikte görüntülenir.
+
+## V5
+- Dolum oranı alanları yüzde olarak girilir: 95 = %95.
+- Tank Hacmi, Araç Kapasitesi (L) olarak adlandırıldı.
+- ADR Max yerine Alınmak İstenen Tonaj ve araç kapasitesi mantığı kullanılır.
+- Yeni 4. menü: % - 90+ Üzeri Günlük Hesaplama.
+- Ürün bazlı 90+ günlük fire oranı Yetkili Modu'nda değiştirilebilir.
+- Referans gün kalan tonajı ile hesap yeniden başlatılabilir.
+- Araç çıkışı / kalan toplam tonaj hareketleri günlük rapora eklenebilir.
+- Excel uyumlu .xls günlük rapor indirilebilir.

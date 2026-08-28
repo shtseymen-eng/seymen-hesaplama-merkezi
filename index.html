@@ -48,6 +48,7 @@
       <button class="active" data-page="litre-tonaj">◈ Litre - Tonaj</button>
       <button data-page="tonaj-litre">⚖ Tonaj - Litre</button>
       <button data-page="fire">％ Fire Hesaplama</button>
+      <button data-page="fire90">％ 90+ Günlük Fire</button>
       <button data-page="products">⬡ Ürünler</button>
       <button data-page="history">◷ Geçmiş Hesaplamalar</button>
     </nav>
@@ -58,16 +59,16 @@
         <div class="card">
           <div class="card-title"><h2>Litreden Tonaj Hesabı</h2><span class="pill">⚡ Otomatik hesaplama</span></div>
           <div class="form-grid">
-            <label>Tank Hacmi (L)<input id="ltTank" type="number" value="26000"></label>
-            <label>Dolum Oranı<input id="ltFill" type="number" step="0.01" value="0.95"></label>
+            <label>Araç Kapasitesi (L)<input id="ltTank" type="number" value="26000"></label>
+            <label>Dolum Oranı (%)<input id="ltFill" type="number" step="1" value="95"></label>
             <label>Ürün Seçimi<select id="ltProduct"></select></label>
-            <label>ADR Max (ton)<input id="ltAdr" type="number" step="0.01" value="26"></label>
+            <label>Alınmak İstenen Tonaj (ton)<input id="ltAdr" type="number" step="0.01" value="25"></label>
           </div>
           <div class="result-grid">
             <div><span>Yoğunluk (kg/L)</span><strong id="ltDensity">-</strong></div>
-            <div><span>Güvenli Hacim (L)</span><strong id="ltSafeVolume">-</strong></div>
-            <div><span>Yüklenebilir (kg)</span><strong id="ltKg">-</strong></div>
-            <div><span>Yüklenebilir (ton)</span><strong id="ltTon">-</strong></div>
+            <div><span>%95 Kullanılabilir Hacim (L)</span><strong id="ltSafeVolume">-</strong></div>
+            <div><span>Maks. Yüklenebilir (kg)</span><strong id="ltKg">-</strong></div>
+            <div><span>Maks. Yüklenebilir (ton)</span><strong id="ltTon">-</strong></div>
           </div>
           <div id="ltStatus" class="status"></div>
           <button class="primary" id="ltSave">Hesabı Geçmişe Kaydet</button>
@@ -80,15 +81,15 @@
           <div class="card-title"><h2>Tonajdan Litre Hesabı</h2><span class="pill">⚡ Otomatik hesaplama</span></div>
           <div class="form-grid">
             <label>Ürün Seçimi<select id="tlProduct"></select></label>
-            <label>Dolum Oranı<input id="tlFill" type="number" step="0.01" value="0.95"></label>
-            <label>Yüklenmek İstenen Tonaj (kg)<input id="tlKg" type="number" value="25000"></label>
-            <label>ADR Max (ton)<input id="tlAdr" type="number" step="0.01" value="26"></label>
+            <label>Dolum Oranı (%)<input id="tlFill" type="number" step="1" value="95"></label>
+            <label>Alınmak İstenen Tonaj (ton)<input id="tlKg" type="number" step="0.01" value="25"></label>
+            <label>Araç Kapasitesi (L)<input id="tlAdr" type="number" value="33000"></label>
           </div>
           <div class="result-grid">
             <div><span>Yoğunluk (kg/L)</span><strong id="tlDensity">-</strong></div>
             <div><span>Gerekli Net Hacim (L)</span><strong id="tlNet">-</strong></div>
-            <div><span>Gerekli Tank Hacmi (L)</span><strong id="tlTank">-</strong></div>
-            <div><span>Talep Tonajı</span><strong id="tlTon">-</strong></div>
+            <div><span>%95’e Göre Gerekli Araç Kapasitesi (L)</span><strong id="tlTank">-</strong></div>
+            <div><span>%95 Kullanılabilir Araç Hacmi</span><strong id="tlTon">-</strong></div>
           </div>
           <div id="tlStatus" class="status"></div>
           <button class="primary" id="tlSave">Hesabı Geçmişe Kaydet</button>
@@ -130,6 +131,76 @@
         </div>
       </section>
 
+
+      <section id="page-fire90" class="page">
+        <div class="hero"><div><h1>% - 90+ Üzeri Günlük Hesaplama</h1><p>90. günden sonraki günlük fireyi ürün bazlı oranla ve azalan bakiye üzerinden hesaplayın.</p></div></div>
+
+        <div class="card">
+          <div class="card-title"><h2>90+ Günlük Fire Hesabı</h2><span class="pill">Günlük azalan bakiye</span></div>
+          <div class="form-grid">
+            <label>Ürün Seçimi<select id="f90Product"></select></label>
+            <label>İlk Giriş Tarihi<input id="f90EntryDate" type="date"></label>
+            <label>Hesaplama Tarihi<input id="f90CalcDate" type="date"></label>
+            <label>İlk Giriş Tonajı (ton)<input id="f90EntryTon" type="number" step="0.001" value="100"></label>
+            <label>90. Gün Sonu Kalan Tonaj (ton)<input id="f90Day90Ton" type="number" step="0.001" value="90"></label>
+            <label>90+ Günlük Fire Oranı (%)<input id="f90Rate" type="number" step="0.001" value="0.002"></label>
+          </div>
+
+          <div class="subcard">
+            <h3>Belirli Gün Bakiye Düzeltmesi</h3>
+            <p class="muted">Örneğin 97. günde gerçek kalan tonaj belli ise 97 ve o günkü tonajı girin. Sonraki günler bu yeni bakiye üzerinden devam eder.</p>
+            <div class="form-grid compact">
+              <label>Referans Gün (90+)<input id="f90RefDay" type="number" min="90" step="1" placeholder="Örn. 97"></label>
+              <label>Referans Gün Kalan Tonaj (ton)<input id="f90RefTon" type="number" step="0.001" placeholder="Örn. 86,500"></label>
+            </div>
+          </div>
+
+          <div class="result-grid five">
+            <div><span>Toplam Gün</span><strong id="f90TotalDays">-</strong></div>
+            <div><span>Hesaplanan 90+ Gün</span><strong id="f90ExtraDays">-</strong></div>
+            <div><span>Hesap Başlangıç Tonajı</span><strong id="f90BaseTon">-</strong></div>
+            <div><span>90+ Toplam Fire</span><strong id="f90Loss">-</strong></div>
+            <div class="featured"><span>Hesaplama Tarihi Kalan Tonaj</span><strong id="f90Remaining">-</strong></div>
+          </div>
+          <div id="f90Validation" class="status hidden"></div>
+          <div class="formula-note">Günlük fire: <b>Gün Başı Bakiye × Günlük Fire Oranı</b>. Ertesi gün fire düşülmüş yeni bakiye üzerinden hesaplanır.</div>
+          <button class="primary" id="f90Save">Hesabı Geçmişe Kaydet</button>
+        </div>
+
+        <div class="card">
+          <div class="card-title"><h2>Günlük Rapor ve Ara Hareketler</h2><span class="pill">Excel raporu</span></div>
+          <p class="muted">90. günden sonra araç çıkışı veya gerçek kalan toplam tonaj bilgisi varsa ekleyin. Sonraki günlük fire hesapları yeni bakiye üzerinden yürür.</p>
+          <div class="event-grid">
+            <label>Gün No<input id="f90EventDay" type="number" min="91" step="1" placeholder="Örn. 97"></label>
+            <label>Hareket Türü
+              <select id="f90EventType">
+                <option value="exit">Araç Çıkış Tonajı</option>
+                <option value="balance">Kalan Toplam Tonaj</option>
+              </select>
+            </label>
+            <label>Miktar (ton)<input id="f90EventTon" type="number" step="0.001" placeholder="Örn. 12,500"></label>
+            <button type="button" class="secondary event-add" id="f90EventAdd">Hareket Ekle</button>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Gün</th><th>Tarih</th><th>Tür</th><th>Miktar (ton)</th><th></th></tr></thead>
+              <tbody id="f90EventRows"></tbody>
+            </table>
+          </div>
+          <div class="report-actions">
+            <button type="button" class="secondary" id="f90Preview">Günlük Raporu Hesapla</button>
+            <button type="button" class="primary" id="f90Excel">Excel Raporu İndir</button>
+          </div>
+          <div class="table-wrap daily-report-wrap">
+            <table>
+              <thead><tr><th>Gün</th><th>Tarih</th><th>Gün Başı (kg)</th><th>Hareket</th><th>Günlük Fire (kg)</th><th>Gün Sonu (kg)</th></tr></thead>
+              <tbody id="f90DailyRows"><tr><td colspan="6" class="empty">Rapor henüz hesaplanmadı.</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
       <section id="page-products" class="page">
         <div class="hero"><div><h1>Ürünler</h1><p>Masaüstü ana verisinden web tarafına gelen ürün ve yoğunluk listesini görüntüleyin.</p></div></div>
         <div class="card">
@@ -141,6 +212,7 @@
             <div class="admin-grid">
               <label>Ürün Adı<input id="adminName" type="text" placeholder="Ürün adı"></label>
               <label>Yoğunluk (kg/L)<input id="adminDensity" type="number" step="0.0001" placeholder="0,0000"></label>
+              <label>90+ Günlük Fire Oranı (%)<input id="adminFireRate" type="number" step="0.001" placeholder="0,002"></label>
             </div>
             <div class="admin-actions">
               <button id="adminAdd" class="primary">Ürün Ekle</button>
@@ -149,7 +221,7 @@
             </div>
             <div class="readonly-note">Bu değişiklikler yalnızca bu sekmede geçerlidir. Sekme kapanınca ana masaüstü verisi geri gelir.</div>
           </div>
-          <div class="table-wrap"><table><thead><tr><th class="admin-col hidden">Seç</th><th>Ürün</th><th>Yoğunluk (kg/L)</th></tr></thead><tbody id="productRows"></tbody></table></div>
+          <div class="table-wrap"><table><thead><tr><th class="admin-col hidden">Seç</th><th>Ürün</th><th>Yoğunluk (kg/L)</th><th>90+ Günlük Fire (%)</th></tr></thead><tbody id="productRows"></tbody></table></div>
           <div class="readonly-note">Web tarafında ürün listesi salt okunur. Kalıcı ana veri masaüstü uygulamasından yönetilecektir.</div>
         </div>
       </section>
