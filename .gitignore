@@ -1,0 +1,26 @@
+# Geçici çalışma ve analiz dosyaları
+work/
+scratch/
+
+# Bağımlılıklar ve derlemeler
+node_modules/
+dist/
+build/
+out/
+coverage/
+
+# Yerel veriler
+*.db
+*.db-journal
+*.sqlite
+*.sqlite3
+
+# Gizli ortam değerleri
+.env
+.env.*
+!.env.example
+
+# Günlükler ve işletim sistemi dosyaları
+*.log
+.DS_Store
+Thumbs.db
