@@ -1,7 +1,7 @@
 # Masaüstü ve Web Hesaplama Uygulaması Tasarımı
 
 **Tarih:** 28 Ağustos 2026  
-**Durum:** Kullanıcı tarafından onaylanan mimarinin yazılı şartnamesi
+**Durum:** Kullanıcı tarafından onaylanan mimari, erişim modeli ve görsel yaklaşımın yazılı şartnamesi
 
 ## 1. Amaç
 
@@ -45,6 +45,33 @@ Uygulama, kaynak Excel dosyalarının okunaklı tablo dilini koruyarak modern bi
 - Hatalı veya eksik girişte eski/geçersiz sonuç gösterilmez; ilgili alanın altında kısa Türkçe hata mesajı gösterilir.
 - Masaüstünde çevrimdışı çalışma ve eşitleme durumu her ekranda küçük bir durum göstergesiyle belirtilir: **Eşitlendi**, **İnternet yok** veya **Bekleyen değişiklikler**.
 - Masaüstü genişliği daraltıldığında sol menü simgeli dar moda geçebilir; web küçük ekranlarda açılır/kapanır menü kullanır.
+
+### 3.1. Sayfa Görselleri ve İkonlar
+
+Görseller, hesaplama alanlarını veya tablo sonuçlarını örtmeyen destekleyici bir katman olarak kullanılacaktır. Her ana ekranda marka bandının altında, ekran başlığının yanında veya üstünde yaklaşık `16:5` oranında alçak bir görsel alan bulunur. Görsele koyu mavi, yarı saydam bir katman uygulanır; sayfa başlığı ve kısa açıklama okunaklı kalır. Dar ekranlarda görsel yüksekliği azaltılır, ancak hesap tablosunun önüne geçirilmez.
+
+İlk sürüm için seçilen görsel yönleri ve kaynak adayları şunlardır:
+
+- **Litre - Tonaj:** endüstriyel depolama tankları — Bruno Guerrero, Unsplash: <https://unsplash.com/photos/large-industrial-storage-tanks-under-a-clear-blue-sky-0cuSWPG8CL8>
+- **Tonaj - Litre:** endüstriyel tesis ve tankerler — Robert So, Pexels: <https://www.pexels.com/photo/industrial-structure-and-fuel-tankers-parked-11003992/>
+- **Fire Hesaplama:** boru, tank ve tesis görünümü — Hazel J, Unsplash: <https://unsplash.com/photos/vast-industrial-complex-with-pipes-tanks-and-buildings-9KeG7W4cI5U>
+- **Ürünler:** varil bulunan depo ortamı — Martin Zapata, Pexels: <https://www.pexels.com/photo/worker-in-warehouse-with-barrels-20379378/>
+- **Geçmiş Hesaplamalar:** raporlama ve veri analizi görünümü — Jakub Żerdzicki, Unsplash: <https://unsplash.com/photos/someone-analyzes-financial-data-on-a-tablet-EL16ACtwLxg>
+
+Görseller dış adresten çalışırken yüklenmeyecek; uygun çözünürlükte indirilip optimize edilmiş yerel uygulama varlıkları olarak paketlenecektir. Böylece masaüstü çevrimdışıyken de tasarım bozulmaz ve üçüncü taraf izleme isteği oluşmaz. Orijinal dosya, kaynak sayfası, fotoğrafçı ve lisans kaydı `THIRD_PARTY_NOTICES.md` içinde tutulur; uygulamanın **Görsel Kaynakları** penceresinden de erişilebilir.
+
+Unsplash görselleri Unsplash lisansı, Pexels görselleri Pexels lisansı altında kullanılacaktır. Sol menü, işlem düğmeleri ve özet kartlarında sade Lucide ikonları kullanılacaktır. Fotoğrafın içine metin gömülmez; her görselin Türkçe alternatif açıklaması bulunur. Görsel kırpma odak noktaları masaüstü ve mobil için ayrı tanımlanır.
+
+### 3.2. Raporlama Görünümü
+
+**Geçmiş Hesaplamalar** sayfasında, kayıt listesinin üzerinde aşağıdaki kompakt raporlama bileşenleri bulunur:
+
+- Seçili tarih aralığındaki toplam hesaplama sayısı
+- `Litre - Tonaj`, `Tonaj - Litre` ve `Fire Hesaplama` kayıt sayıları
+- Son 30 gündeki günlük kayıt adetlerini gösteren sade çizgi/sütun grafik
+- En sık kullanılan ürünleri gösteren en fazla beş satırlık özet
+
+Bu özetler yalnızca kaydedilmiş geçmiş verilerinden türetilir; Excel formüllerine, hesap sonuçlarına veya ürün yoğunluklarına müdahale etmez. Masaüstünde filtre değiştiğinde kartlar ve grafik de aynı filtreyi izler. Web’de parola ile açılan salt okunur geçmişte aynı raporlar görüntülenebilir. Grafiklerin yanında sayısal karşılıkları bulunur; renk tek başına bilgi taşımaz.
 
 ## 4. Hesaplama Motoru ve Formül Koruması
 
@@ -196,7 +223,10 @@ Veri akışı yalnızca aşağıdaki yöndedir:
 ## 8. Yetkilendirme ve Güvenlik
 
 - Masaüstü uygulaması, eşitleme API’sine ait yazma kimliğini işletim sisteminin güvenli kimlik bilgisi alanında saklar.
-- Web kullanıcısı salt okunur role sahiptir.
+- Web’deki **Litre - Tonaj**, **Tonaj - Litre**, **Fire Hesaplama** ve **Ürünler** ekranları herkes tarafından hesap açmadan kullanılabilir.
+- Web’deki **Geçmiş Hesaplamalar** menü seçeneği herkes tarafından görülür; içerik açılırken parola ile yetki doğrulaması istenir. Yetki alan kullanıcı geçmişi ve rapor özetlerini yalnızca okuyabilir.
+- Geçmiş erişimi kısa süreli güvenli oturum çereziyle korunur; parola tarayıcıya, masaüstü paketine veya kaynak koda açık metin olarak yerleştirilmez.
+- Web ziyaretçisi ürün, formül ve geçmiş bakımından salt okunur role sahiptir.
 - API, istemciden gelen sayısal değerleri ve metinleri yeniden doğrular.
 - Ürün veya geçmiş verisi için web tarayıcısından yazma isteği gönderilse bile sunucu bunu reddeder.
 - İlk sürümde kullanıcı/rol yönetim ekranı bulunmaz; masaüstü yazma rolü ve web salt-okunur rolü sabittir.
@@ -258,14 +288,23 @@ Masaüstü ve web aynı hesaplama paketini ve mümkün olan en geniş ölçüde 
 - Girdi değiştiğinde sonuçların otomatik hesaplandığı doğrulanır.
 - Masaüstü ve web yetki farkları uçtan uca test edilir.
 - Her ekranın sarı marka bandında mavi `SEYMEN` etiketi ile **Ş. Melih KARABAY için özenle hazırlanmıştır.** notunun bulunduğu doğrulanır.
+- Beş ekranın her birinde doğru yerel görselin, Türkçe alternatif açıklamanın ve kaynak kaydının bulunduğu doğrulanır.
+- Görseller yüklenemese bile hesap alanlarının ve sonuçların eksiksiz çalıştığı doğrulanır.
+- Geçmiş rapor kartları ve grafiklerinin aktif filtrelerle aynı kayıt kümesini kullandığı doğrulanır.
+- Herkese açık web hesaplama sayfalarının giriş istemediği, geçmiş içeriğinin ise yetkisiz kullanıcıya açılmadığı doğrulanır.
+- Web arayüzünün ürün, geçmiş veya formül verisini değiştiremediği güvenlik testleriyle doğrulanır.
 - Windows EXE temiz bir Windows ortamında kurulum/açılış testiyle doğrulanır.
 
 ## 12. GitHub ve Dağıtım
 
 - Kaynak kod GitHub’a hazır tek depo halinde tutulur.
 - GitHub Actions, Windows üzerinde masaüstü kurulum paketi/EXE üretir.
+- EXE ve kurulum paketi herkese açık web sayfasına veya herkese açık GitHub sürümüne eklenmez.
+- Masaüstü indirmesi yalnızca yetkilendirilmiş kullanıcıların ulaşabildiği özel sürüm deposu ya da süreli/korumalı indirme bağlantısı üzerinden sağlanır.
+- Web uygulamasında genel bir **Masaüstünü İndir** bağlantısı gösterilmez.
 - Web ve API için sağlayıcıdan bağımsız üretim derlemeleri ve ortam değişkeni örnekleri hazırlanır.
 - Veritabanı parolaları, masaüstü eşitleme kimliği ve diğer gizli değerler repoya eklenmez.
+- İnternetten kullanılan fotoğraf ve ikonların kaynak/lisans kayıtları dağıtım paketlerine eklenir.
 - İlk teslimatta sürüm oluşturma adımları README içinde açıklanır.
 
 ## 13. İlk Sürüm Dışında Kalanlar
@@ -291,3 +330,6 @@ Masaüstü ve web aynı hesaplama paketini ve mümkün olan en geniş ölçüde 
 9. Web’den ürün, geçmiş veya formül değişikliği yapılamaz.
 10. Kaynak Excel örnekleriyle yapılan formül doğrulama testleri geçer.
 11. Masaüstü ve web’deki beş ekranın tamamında sarı bant üzerinde mavi `SEYMEN` etiketi ve altında **Ş. Melih KARABAY için özenle hazırlanmıştır.** notu görünür.
+12. Beş ana ekranda ilgili, yerel paketlenmiş ve kaynak bilgisi kayıtlı görseller bulunur; geçmiş ekranında filtrelerle uyumlu rapor kartları ve grafik gösterilir.
+13. Web hesaplama ve ürün ekranları herkese açıktır; geçmiş içeriği yalnızca parola doğrulamasından sonra salt okunur açılır.
+14. Windows kurulum paketi herkese açık web veya GitHub sürümünden indirilemez; yalnızca yetkilendirilmiş dağıtım kanalında bulunur.
