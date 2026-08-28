@@ -1,3 +1,7 @@
+const BASE_CORRELATIONS = [{"product":"2 E. HEXANOL","gtip":"290516850019","correlationYear":2008,"correlationGtip":"2905.16.10.00.00  +2905.16.80.00.19","aRate":0.4,"bRate":0.002},{"product":"ACETIC ASID","gtip":"291521000011","correlationYear":"YOK","correlationGtip":"YOK","aRate":null,"bRate":null},{"product":"ACETONE","gtip":"291411000000","correlationYear":"YOK","correlationGtip":"YOK","aRate":0.4,"bRate":0.003},{"product":"ACRYLONITRIL","gtip":"292610000000","correlationYear":"YOK","correlationGtip":"YOK","aRate":null,"bRate":null},{"product":"ARCOL POLYOL 1107-1108","gtip":"390720200000","correlationYear":2026,"correlationGtip":"390729.20.0011--3907.29.20.00.19","aRate":0.2,"bRate":0.001},{"product":"ARCOL - DESMOPEN 1905","gtip":"390720200000","correlationYear":2026,"correlationGtip":"3907.21.00.00.00+3907.29.20.00.11+3907.29.20.00.19","aRate":0.2,"bRate":0.001},{"product":"ARAMCO PRIMA 110","gtip":"271019990098","correlationYear":2010,"correlationGtip":"2710.19.99.00.98","aRate":0.2,"bRate":0.001},{"product":"ARAMCO PRIMA 230","gtip":"271019990098","correlationYear":2010,"correlationGtip":"2710.19.99.00.98","aRate":0.2,"bRate":0.001},{"product":"ARTIK DENİZCİLİK YAKITI ( HSFO - FUEL OİL )","gtip":"2710.19.67.00.41","correlationYear":2020,"correlationGtip":"2710.19.67.00.11","aRate":null,"bRate":null},{"product":"ARTIK DENİZCİLİK YAKITI ( HSFO>1 - FUEL OİL)","gtip":"2710.19.67.00.49","correlationYear":2020,"correlationGtip":"2710.19.67.00.39","aRate":null,"bRate":null},{"product":"ARTIK DENİZCİLİK YAKITLARI (HSFO)","gtip":"2710.19.67.00.42","correlationYear":2020,"correlationGtip":"2710.19.67.00.31","aRate":null,"bRate":null},{"product":"ARTIK DENİZCİLİK YAKITLARI (VLSFO)","gtip":"2710.19.66.00.31","correlationYear":2019,"correlationGtip":"2710.19.64.00.31","aRate":null,"bRate":null},{"product":"ARTIK DENİZCİLİK YAKITLARI (VLSFO-DGR)","gtip":"2710.19.66.00.39","correlationYear":2019,"correlationGtip":"2710.19.64.00.31","aRate":null,"bRate":null},{"product":"Artık denizcilik yakıtları(VLSFO,BLENDED","gtip":"2710.19.66.00.31","correlationYear":2019,"correlationGtip":"2710.19.64.00.31","aRate":null,"bRate":null},{"product":"BA - 15 PPM MEHQ/BULK","gtip":"291612000013","correlationYear":2008,"correlationGtip":"2916.12.90.00.11","aRate":0.4,"bRate":0.002},{"product":"BASE  OIL SN 500 ( HEAVY NEUTRAL )","gtip":"271019990011","correlationYear":2015,"correlationGtip":"2710.19.99.00.21 +   2710.19.9900.22 + 2710.19.99.00.23 + 2710.19.9900.24 ","aRate":0.2,"bRate":0.001},{"product":"BASE OIL 4CST","gtip":"271019990098","correlationYear":2010,"correlationGtip":"2710.19.99.00.98","aRate":0.2,"bRate":0.002},{"product":"BASE OIL 70N","gtip":"271019990098","correlationYear":2010,"correlationGtip":"2710.19.99.00.98","aRate":0.2,"bRate":0.002},{"product":"BASE OIL AK-15","gtip":"271019990098","correlationYear":2010,"correlationGtip":"2710.19.99.00.98","aRate":0.2,"bRate":0.002},{"product":"BASE OIL BG 450N","gtip":"271019990011","correlationYear":2015,"correlationGtip":"2710.19.99.00.21 +   2710.19.9900.22 + 2710.19.99.00.23 + 2710.19.9900.24 ","aRate":0.2,"bRate":0.001},{"product":"BASE OIL BS 150","gtip":"271019990011","correlationYear":2015,"correlationGtip":"2710.19.99.00.21 +   2710.19.9900.22 + 2710.19.99.00.23 + 2710.19.9900.24 ","aRate":0.2,"bRate":0.001},{"product":"BASE OIL HVI 6","gtip":"271019990098","correlationYear":2010,"correlationGtip":"2710.19.99.00.98","aRate":0.2,"bRate":0.002},{"product":"BASE OIL HVI 4","gtip":"271019990098","correlationYear":2010,"correlationGtip":"2710.19.99.00.98","aRate":0.2,"bRate":0.002},{"product":"BASE OIL BS 150","gtip":"271019990011","correlationYear":2015,"correlationGtip":"2710.19.99.00.21 +   2710.19.9900.22 + 2710.19.99.00.23 + 2710.19.9900.24 ","aRate":0.2,"bRate":0.001},{"product":"BASE OIL SN 350","gtip":"271019990011","correlationYear":2015,"correlationGtip":"2710.19.99.00.21 +   2710.19.9900.22 + 2710.19.99.00.23 + 2710.19.9900.24 ","aRate":0.2,"bRate":0.001},{"product":"BASE OIL SN 500","gtip":"271019990011","correlationYear":2015,"correlationGtip":"2710.19.99.00.21 +   2710.19.9900.22 + 2710.19.99.00.23 + 2710.19.9900.24 ","aRate":0.2,"bRate":0.001},{"product":"BASE OIL SN-900","gtip":"271019990011","correlationYear":2015,"correlationGtip":"2710.19.99.00.21 +   2710.19.9900.22 + 2710.19.99.00.23 + 2710.19.9900.24 ","aRate":null,"bRate":null},{"product":"BUTYL ACETATE","gtip":"291533000000","correlationYear":"YOK","correlationGtip":"YOK","aRate":null,"bRate":null},{"product":"BUTYL ACRYLATE 15 PPM MEHQ BULK","gtip":"291612000013","correlationYear":2008,"correlationGtip":"2916.12.90.00.11","aRate":0.4,"bRate":0.002},{"product":"BUTYL CELLOSOLVE","gtip":"290943000011","correlationYear":"YOK","correlationGtip":"YOK","aRate":null,"bRate":null},{"product":"CARADOL ED 56-200","gtip":"390729200000","correlationYear":2026,"correlationGtip":"3907.29.20.00.11   3907.29.20.00.19","aRate":0.2,"bRate":0.001},{"product":"CARADOL SC 48-08","gtip":"390729200000","correlationYear":2026,"correlationGtip":"3907.29.20.00.11   3907.29.20.00.19","aRate":0.2,"bRate":0.001},{"product":"CARADOL SP 30-47","gtip":"390729200000","correlationYear":2026,"correlationGtip":"3907.29.20.00.11   3907.29.20.00.19","aRate":0.2,"bRate":0.001},{"product":"CARADOL SP 37-25","gtip":"390729200000","correlationYear":2026,"correlationGtip":"3907.29.20.00.11   3907.29.20.00.19","aRate":0.2,"bRate":0.001},{"product":"CARADOL SP 42-15","gtip":"390729200000","correlationYear":2026,"correlationGtip":"3907.29.20.00.11   3907.29.20.00.19","aRate":0.2,"bRate":0.001},{"product":"CARADOL SP 44-10","gtip":"39072920000","correlationYear":2026,"correlationGtip":"3907.29.20.00.11   3907.29.20.00.19","aRate":0.2,"bRate":0.001},{"product":"CHEVRON 100R","gtip":"271019990098","correlationYear":2010,"correlationGtip":"2710.19.99.00.98","aRate":0.2,"bRate":0.002},{"product":"CHEVRON 220R","gtip":"271019990098","correlationYear":2010,"correlationGtip":"2710.19.99.00.98","aRate":0.2,"bRate":0.002},{"product":"CHEVRON 600R","gtip":"271019990098","correlationYear":2010,"correlationGtip":"2710.19.99.00.98","aRate":0.2,"bRate":0.002},{"product":"CYCLOHEXANONE","gtip":"291422000011","correlationYear":"YOK","correlationGtip":"YOK","aRate":0.4,"bRate":0.002},{"product":"DAMITIK DENİZCİLİK YAKITLARI","gtip":"2710.19.47.00.18","correlationYear":2015,"correlationGtip":"2710.19.47.0013+ 2710.19.47.00.14+ 2710.19.47.00.15+ 2710.19.47.00.17","aRate":0.2,"bRate":0.002},{"product":"DENATURATED SYNTHETIC ETHYL ALCOHOL","gtip":"220720009013","correlationYear":" ---","correlationGtip":"2207.20.00.90.11","aRate":null,"bRate":null},{"product":"DENATURE ETHANOL","gtip":"220720001009","correlationYear":2022,"correlationGtip":"2207.20.00.10.13","aRate":null,"bRate":null},{"product":"DENATÜRE METHANOL","gtip":"290511001011","correlationYear":"YOK","correlationGtip":"YOK","aRate":0.4,"bRate":0.0025},{"product":"DIDP ( Dİ-İZODESİL FTALAT )","gtip":"381220900000","correlationYear":"YOK","correlationGtip":"YOK","aRate":null,"bRate":null},{"product":"DIETILEN GLIKOL (2.2","gtip":"290941000000","correlationYear":"YOK","correlationGtip":"YOK","aRate":0.2,"bRate":0.002},{"product":"DINP ( Dİ-İZONONİL FTALAT )","gtip":"291733000000","correlationYear":"YOK","correlationGtip":"YOK","aRate":0.2,"bRate":0.001},{"product":"EA - 15 PPM MEHQ/BULK","gtip":"291612000012","correlationYear":2008,"correlationGtip":"2916.12.20.00.00","aRate":0.4,"bRate":0.0025},{"product":"EOA TEA 99% PMLA BULK","gtip":"292215000000","correlationYear":2016,"correlationGtip":"2922.13.10.00.00","aRate":0.2,"bRate":0.001},{"product":"ETHYL ACETATE","gtip":"291531000000","correlationYear":"YOK","correlationGtip":"YOK","aRate":0.4,"bRate":0.0025},{"product":"ETHYL PROXİTOL","gtip":"290949809019","correlationYear":2008,"correlationGtip":"2909.49.18.00.13 +2909.49.90.90.00","aRate":0.4,"bRate":0.0025},{"product":"FORMIC ACID","gtip":"291511000000","correlationYear":"YOK","correlationGtip":"YOK","aRate":null,"bRate":null},{"product":"HEPTANE","gtip":"271012250000","correlationYear":2011,"correlationGtip":"2710.11.25.00.00","aRate":0.4,"bRate":0.003},{"product":"HEXANE","gtip":"271012250000","correlationYear":2011,"correlationGtip":"2710.11.25.00.00","aRate":0.4,"bRate":0.003},{"product":"ISOPROPANOL","gtip":"290512000012","correlationYear":"YOK","correlationGtip":"YOK","aRate":0.4,"bRate":0.0025},{"product":"ISO BUTHANOL","gtip":"290514900011","correlationYear":"YOK","correlationGtip":"YOK","aRate":null,"bRate":null},{"product":"KIXX LUBO 4CST","gtip":"271019850000","correlationYear":2011,"correlationGtip":"2710.19.85.00.00","aRate":0.2,"bRate":0.001},{"product":"KIXX LUBO 600N","gtip":"271019850000","correlationYear":2011,"correlationGtip":"2710.19.85.00.00","aRate":0.2,"bRate":0.001},{"product":"L.A.B.","gtip":"381700500000","correlationYear":"YOK ","correlationGtip":"YOK","aRate":0.2,"bRate":0.001},{"product":"L.CAL.LIGNOSULPHONATE BORR.CA I 50","gtip":"380400001000","correlationYear":2009,"correlationGtip":"3804.00.10.00.00","aRate":null,"bRate":null},{"product":"M.E.K.","gtip":"291412000000","correlationYear":"YOK","correlationGtip":"YOK","aRate":0.4,"bRate":0.0025},{"product":"M.ETHYLENE GLYCOL","gtip":"290531000000","correlationYear":"YOK","correlationGtip":"YOK","aRate":0.2,"bRate":0.002},{"product":"MDI (DESMODUR 44 V 20 L","gtip":"390931000000","correlationYear":2016,"correlationGtip":"3909.30.00.00.00","aRate":null,"bRate":null},{"product":"METHANOL","gtip":"290511001011","correlationYear":"YOK","correlationGtip":"YOK","aRate":0.4,"bRate":0.0025},{"product":"METHYL ACETATE","gtip":"291539003011","correlationYear":2008,"correlationGtip":"2915.39.30.00.11","aRate":null,"bRate":null},{"product":"Methylene Chloride (MEC)","gtip":"290312000000","correlationYear":"YOK","correlationGtip":"YOK","aRate":null,"bRate":null},{"product":"METIL PROXITOL","gtip":"290949809019","correlationYear":2008,"correlationGtip":"2909.49.81.00.13+ 2909.49.90.90.00","aRate":0.4,"bRate":0.0025},{"product":"MMA - 15 PPM MEHQ /BULK","gtip":"291614000011","correlationYear":2008,"correlationGtip":"2916.14.10.00.00","aRate":0.4,"bRate":0.0025},{"product":"MMA - 20 PPM AO-30/BULK","gtip":"291614000011","correlationYear":2008,"correlationGtip":"2916.14.10.00.00","aRate":0.4,"bRate":0.0025},{"product":"MMA-20 PPM AO-30/BULK","gtip":"291614000011","correlationYear":2008,"correlationGtip":"2916.14.10.00.01","aRate":0.4,"bRate":0.0025},{"product":"N-BUTANOL","gtip":"290513000000","correlationYear":"YOK","correlationGtip":"YOK","aRate":null,"bRate":null},{"product":"N-BUTYL ACETATE","gtip":"291533000000","correlationYear":"YOK","correlationGtip":"YOK","aRate":null,"bRate":null},{"product":"NEODOL 25-7","gtip":"340242000000","correlationYear":2022,"correlationGtip":"3402.13.00.00.00","aRate":0.2,"bRate":0.001},{"product":"N-PROPANOL","gtip":"290512000011","correlationYear":"YOK","correlationGtip":"YOK","aRate":0.4,"bRate":0.002},{"product":"OXS BUCB SOLV PMLA BULK","gtip":"290943000012","correlationYear":"YOK","correlationGtip":"YOK","aRate":null,"bRate":null},{"product":"OXS BUCS SOLV PMLA BULK","gtip":"290943000011","correlationYear":"YOK","correlationGtip":"YOK","aRate":0.4,"bRate":0.002},{"product":"OXS DOWANOL DPNB BULK","gtip":"290949809019","correlationYear":2021,"correlationGtip":"3402.13.00.00.00","aRate":0.4,"bRate":0.0025},{"product":"PETROSOL 95A 16/18","gtip":"270750000011","correlationYear":2011,"correlationGtip":"2707.50.90.00.11","aRate":0.4,"bRate":0.003},{"product":"PG IND PMLA BULK","gtip":"290532000000","correlationYear":"YOK","correlationGtip":"YOK","aRate":0.3,"bRate":0.002},{"product":"PGI - PROPILEN GLIKOL","gtip":"290532000000","correlationYear":"YOK","correlationGtip":"YOK","aRate":0.3,"bRate":0.002},{"product":"PHENOL","gtip":"290711001000","correlationYear":"YOK","correlationGtip":"YOK","aRate":0.4,"bRate":0.002},{"product":"PHOSPHORIC ACID","gtip":"280920000017","correlationYear":2011,"correlationGtip":"2809.20.00.00.13","aRate":0.2,"bRate":0.001},{"product":"PM GLYCOL","gtip":"290949809019","correlationYear":2025,"correlationGtip":" 2909.30.37.00.00 + 2909.30.39.00.11 + 2909.30.39.00.12+  2909.30.39.00.13 + 2909.30.39.00.19","aRate":0.4,"bRate":0.0025},{"product":"POLYMERIC MDI","gtip":"390931000000","correlationYear":2016,"correlationGtip":"3909.30.00.00.00","aRate":null,"bRate":null},{"product":"POLYOL 0548","gtip":"390729200000","correlationYear":2026,"correlationGtip":"3907.29.20.00.11   3907.29.20.00.19","aRate":0.2,"bRate":0.001},{"product":"PYROLYSIS OIL","gtip":"2707.99.99.00.00","correlationYear":"YOK","correlationGtip":"YOK","aRate":null,"bRate":null},{"product":"SABIC TDI 0380","gtip":"292910000011","correlationYear":2008,"correlationGtip":"2929.10.10.00.00","aRate":0.2,"bRate":0.001},{"product":"SAE10(SN150)","gtip":"2710.19.99.00.11","correlationYear":2015,"correlationGtip":"2710.19.99.00.21 +   2710.19.9900.22 + 2710.19.99.00.23 + 2710.19.9900.24 ","aRate":0.2,"bRate":0.001},{"product":"SAE30(SN500)","gtip":"2710.19.99.00.11","correlationYear":2015,"correlationGtip":"2710.19.99.00.21 +   2710.19.9900.22 + 2710.19.99.00.23 + 2710.19.9900.24 ","aRate":0.2,"bRate":0.001},{"product":"SAPEG-400 (Polyethylene Glycol)","gtip":"390729110000","correlationYear":2021,"correlationGtip":"3907.20.11.00.00","aRate":null,"bRate":null},{"product":"SEC-BUTYL ACETATE","gtip":"291539009919","correlationYear":2008,"correlationGtip":"2915.39.80.90.19","aRate":null,"bRate":null},{"product":"SOLVENT NAPHTA  (SOLGAD 100)","gtip":"270750000011","correlationYear":2012,"correlationGtip":"2707.50.90.00.11","aRate":0.4,"bRate":0.003},{"product":"SOLVENT NAPHTA (SOLGAD 150 ULN)","gtip":"270750000011","correlationYear":2012,"correlationGtip":"2707.50.90.00.11","aRate":0.4,"bRate":0.003},{"product":"STRENE MONOMER","gtip":"290250000000","correlationYear":"YOK","correlationGtip":"YOK","aRate":0.4,"bRate":0.002},{"product":"SULU H.METHYLENE DI.","gtip":"292122000011","correlationYear":"YOK","correlationGtip":"YOK","aRate":null,"bRate":null},{"product":"SUPRASEC 2085 (MDI)","gtip":"390931000000","correlationYear":2016,"correlationGtip":"3909.30.00.00.00","aRate":null,"bRate":null},{"product":"SUPRASEC 5000 (MDI)","gtip":"390931000000","correlationYear":2016,"correlationGtip":"3909.30.00.00.00","aRate":null,"bRate":null},{"product":"SUPRASEC 5005 (MDI)","gtip":"390931000000","correlationYear":2016,"correlationGtip":"3909.30.00.00.00","aRate":null,"bRate":null},{"product":"SUPRASEC 5025 (MDI)","gtip":"390931000000","correlationYear":2016,"correlationGtip":"3909.30.00.00.00","aRate":null,"bRate":null},{"product":"TDI (DESMODUR T-80)","gtip":"292910000011","correlationYear":2008,"correlationGtip":"2929.10.10.00.00","aRate":0.2,"bRate":0.001},{"product":"TOLUENE","gtip":"290230000000","correlationYear":"YOK","correlationGtip":"YOK","aRate":0.4,"bRate":0.002},{"product":"V.A.M.","gtip":"291532000000","correlationYear":"YOK","correlationGtip":"YOK","aRate":0.4,"bRate":0.0025},{"product":"VAM HQ 14-17BK","gtip":"291532000000","correlationYear":"YOK","correlationGtip":"YOK","aRate":0.4,"bRate":0.0025},{"product":"W.SPIRITE","gtip":"271011210000","correlationYear":2011,"correlationGtip":"2710.11.21.00.00","aRate":null,"bRate":null},{"product":"XYLENE","gtip":"270730000000","correlationYear":2012,"correlationGtip":"2707.30.10.00.00+ 2707.30.90.00.00","aRate":null,"bRate":null}];
+let CORRELATIONS=BASE_CORRELATIONS.map((r,i)=>({...r,_id:i+1}));
+const CORR_SESSION_KEY="seymen_temp_correlations_v6";
+
 const BASE_PRODUCTS = [{"name": "2 E. HEXANOL", "density": 0.8352}, {"name": "ACETIC ASID", "density": 1.0544}, {"name": "ACETONE", "density": 0.795}, {"name": "ARAMCO PRIMA 110", "density": 0.8603}, {"name": "ARCOL POLYOL 1107-1108", "density": 1.0212}, {"name": "BA - 15 PPM MEHQ/BULK", "density": 0.9027}, {"name": "BASE OIL 70N", "density": 0.8318}, {"name": "BASE OIL HVI 4", "density": 0.8444}, {"name": "BASE OIL SN 150", "density": 0.8755}, {"name": "BASE OIL SN 350", "density": 0.883}, {"name": "BUTYL ACRYLATE 15 PPM MEHQ BULK", "density": 0.9018}, {"name": "BUTYL CELLOSOLVE", "density": 0.9031}, {"name": "CARADOL ED56-200", "density": 1.0058}, {"name": "CARADOL SC 48-08", "density": 1.0215}, {"name": "CARADOL SP 30-47", "density": 1.0475}, {"name": "CARADOL SP 42-15", "density": 1.0294}, {"name": "DENATÜRE METHANOL", "density": 0.7949}, {"name": "DIDP ( Dİ-İZODESİL FTALAT )", "density": 0.9686}, {"name": "DIETILEN GLIKOL (2.2", "density": 1.1191}, {"name": "DINP ( Dİ-İZONONİL FTALAT )", "density": 0.9745}, {"name": "EA - 15 PPM MEHQ/BULK", "density": 0.9264}, {"name": "EOA TEA 99% PMLA BULK", "density": 1.1251}, {"name": "ETHYL ACETATE", "density": 0.9055}, {"name": "ETHYL PROXİTOL", "density": 0.9001}, {"name": "FORMIC ACID", "density": 1.2009}, {"name": "HEXANE", "density": 0.6784}, {"name": "ISO BUTHANOL", "density": 0.8044}, {"name": "ISOPROPANOL", "density": 0.7882}, {"name": "L.A.B.", "density": 0.8589}, {"name": "M.E.K.", "density": 0.8091}, {"name": "M.ETHYLENE GLYCOL", "density": 1.1159}, {"name": "MDI (DESMODUR 44 V 20 L", "density": 1.2416}, {"name": "METHANOL", "density": 0.7949}, {"name": "METHYL ACETATE", "density": 0.939}, {"name": "Methylene Chloride (MEC)", "density": 1.3336}, {"name": "METIL PROXITOL", "density": 0.9245}, {"name": "MMA - 20 PPM AO-30/BULK", "density": 0.9481}, {"name": "MMA-20 PPM AO-30/BULK", "density": 0.948}, {"name": "N-BUTANOL", "density": 0.8124}, {"name": "N-BUTYL ACETATE", "density": 0.8854}, {"name": "NEODOL 25-7", "density": 0.9852}, {"name": "N-PROPANOL", "density": 0.8073}, {"name": "OXC BUCS SOLV BULK", "density": 0.9033}, {"name": "OXS BUCB SOLV BULK", "density": 0.9552}, {"name": "OXS DOWANOL DPNB BULK", "density": 0.9158}, {"name": "PG IND BULK ZFIN", "density": 1.0387}, {"name": "PGI - PROPILEN GLIKOL", "density": 1.0388}, {"name": "PHENOL", "density": 1.0697}, {"name": "PM GLYCOL ", "density": 0.9243}, {"name": "POLYMERIC MDI", "density": 1.2404}, {"name": "POLYOL 0548", "density": 1.0227}, {"name": "SABIC TDI 0380", "density": 1.2239}, {"name": "SAE10(SN150)", "density": 0.8831}, {"name": "SAE30(SN500)", "density": 0.8942}, {"name": "SAPEG-400 (Polyethylene Glycol)", "density": 1.1287}, {"name": "SOLVENT NAPHTA (Düşük Kümenli SOLGAD 100)", "density": 0.8761}, {"name": "STRENE MONOMER", "density": 0.9095}, {"name": "SULU H.METHYLENE DI.", "density": 0.8389}, {"name": "SUPRASEC 5025 (MDI)", "density": 1.2414}, {"name": "TDI (DESMODUR T-80)", "density": 1.224}, {"name": "VAM HQ 14-17BK", "density": 0.9367}, {"name": "XYLENE", "density": 0.8645}];
 
 BASE_PRODUCTS.forEach(p=>{if(!Number.isFinite(Number(p.fireRate)))p.fireRate=0.002;});
@@ -11,7 +15,7 @@ function initSelect(id, selected){
   const s=byId(id);
   s.innerHTML=PRODUCTS.map(p=>`<option ${p.name===selected?'selected':''}>${p.name}</option>`).join('');
 }
-initSelect('ltProduct','POLYOL 0548'); initSelect('tlProduct','METHANOL'); initSelect('f90Product','POLYOL 0548');
+initSelect('ltProduct','POLYOL 0548'); initSelect('tlProduct','METHANOL');
 
 document.querySelectorAll('#mainNav button').forEach(btn=>btn.addEventListener('click',()=>{
   document.querySelectorAll('#mainNav button').forEach(x=>x.classList.remove('active'));
@@ -77,73 +81,53 @@ function formatDateTR(value){
   const [y,m,d]=value.split('-');
   return `${d}.${m}.${y}`;
 }
+function currentCorrelation(product,calcDateVal){
+  const year=calcDateVal?Number(calcDateVal.slice(0,4)):new Date().getFullYear();
+  return SeymenLogic.pickCorrelation(CORRELATIONS,product,year);
+}
+function syncFireCorrelation(){
+  const rec=currentCorrelation(byId('fProduct').value,byId('fCalcDate').value);
+  const info=byId('fireCorrelationInfo');
+  if(!rec || rec.aRate===null || rec.bRate===null){
+    byId('fA').value='';byId('fB').value='';
+    info.innerHTML=`<b>${byId('fProduct').value||'-'}</b> • Bu ürün için kullanılabilir A/B fire oranı tanımlı değildir.`;
+    info.classList.add('warning');
+  }else{
+    byId('fA').value=rec.aRate;byId('fB').value=rec.bRate;
+    info.innerHTML=`<b>${rec.product}</b> • Korelasyon: ${rec.correlationYear} • A: %${fmt(rec.aRate,3)} • B: %${fmt(rec.bRate,4)} • GTİP: ${rec.gtip||'-'}`;
+    info.classList.remove('warning');
+  }
+}
 function calcFire(){
+  syncFireCorrelation();
+  const product=byId('fProduct').value;
+  const rec=currentCorrelation(product,byId('fCalcDate').value);
   const entry=+byId('fEntry').value||0;
-  const APercent=+byId('fA').value||0;
-  const BPercent=+byId('fB').value||0;
-  const A=APercent/100;
-  const B=BPercent/100;
+  const APercent=Number(byId('fA').value);
+  const BPercent=Number(byId('fB').value);
   const remaining=+byId('fRemaining').value||0;
   const entryDateVal=byId('fEntryDate').value;
   const calcDateVal=byId('fCalcDate').value;
-  const entryDate=parseDateOnly(entryDateVal);
-  const calcDate=parseDateOnly(calcDateVal);
-
-  let days=0;
-  let valid=true;
-  let message='';
-
-  if(entryDate===null||calcDate===null){
-    valid=false;
-    message='Ürünün giriş tarihi ve hesaplama tarihini seçin.';
-  }else if(calcDate<entryDate){
-    valid=false;
-    message='Hesaplama tarihi, ürün giriş tarihinden önce olamaz.';
-  }else{
-    days=Math.floor((calcDate-entryDate)/86400000);
-  }
-
+  const days=SeymenLogic.totalDayNumber(entryDateVal,calcDateVal);
+  let valid=days!==null, message='';
+  if(!valid) message='Geçerli ilk giriş ve hesaplama tarihi seçin.';
+  else if(!rec || !Number.isFinite(APercent) || !Number.isFinite(BPercent)) {valid=false;message='Seçilen ürün için A/B fire oranı tanımlı değildir.';}
+  const x=valid?SeymenLogic.fireCalculation({entryKg:entry,remaining90Kg:remaining,totalDays:days,aPercent:APercent,bPercent:BPercent}):{firstDays:0,extraDays:0,firstLossKg:0,extraLossKg:0,totalLossKg:0};
   byId('fDays').value=valid?days:'';
-  byId('fEntryDateOut').textContent=formatDateTR(entryDateVal);
-  byId('fCalcDateOut').textContent=formatDateTR(calcDateVal);
-  byId('fDaysOut').textContent=valid?`${fmt(days,0)} gün`:'-';
-
-  const firstDays=valid?Math.min(days,90):0;
-  const extra=valid?Math.max(days-90,0):0;
-  byId('fFirstDaysOut').textContent=valid?`${fmt(firstDays,0)} gün`:'-';
-  byId('fExtraDaysOut').textContent=valid?`${fmt(extra,0)} gün`:'-';
-  byId('fARateOut').textContent=`%${fmt(APercent,2)}`;
-  byId('fBRateOut').textContent=`%${fmt(BPercent,3)}`;
-  const firstLoss=valid?entry*A:0;
-  const extraLoss=valid?remaining*(1-Math.pow(1-B,extra)):0;
-  const total=firstLoss+extraLoss;
-
-  byId('fFirstDays').textContent=valid?fmt(firstDays,0):'-';
-  byId('fExtraDays').textContent=valid?fmt(extra,0):'-';
-  byId('fFirstLoss').textContent=valid?fmt(firstLoss,3):'-';
-  byId('fExtraLoss').textContent=valid?fmt(extraLoss,3):'-';
-  byId('fTotalLoss').textContent=valid?fmt(total,3):'-';
-
-  const validation=byId('fireValidation');
-  if(valid){
-    validation.className='status hidden';
-    validation.textContent='';
-  }else{
-    validation.className='status bad';
-    validation.textContent=message;
-  }
-
-  return {entry,APercent,BPercent,A,B,days,remaining,firstDays,extra,firstLoss,extraLoss,total,entryDateVal,calcDateVal,valid};
+  byId('fEntryDateOut').textContent=formatDateTR(entryDateVal);byId('fCalcDateOut').textContent=formatDateTR(calcDateVal);
+  byId('fDaysOut').textContent=valid?`${days} gün`:'-';byId('fFirstDaysOut').textContent=valid?`${x.firstDays} gün`:'-';byId('fExtraDaysOut').textContent=valid?`${x.extraDays} gün`:'-';
+  byId('fARateOut').textContent=Number.isFinite(APercent)?`%${fmt(APercent,3)}`:'-';byId('fBRateOut').textContent=Number.isFinite(BPercent)?`%${fmt(BPercent,4)}`:'-';
+  byId('fFirstDays').textContent=valid?x.firstDays:'-';byId('fExtraDays').textContent=valid?x.extraDays:'-';byId('fFirstLoss').textContent=valid?fmt(x.firstLossKg,3):'-';byId('fExtraLoss').textContent=valid?fmt(x.extraLossKg,3):'-';byId('fTotalLoss').textContent=valid?fmt(x.totalLossKg,3):'-';
+  const v=byId('fireValidation');v.className=valid?'status hidden':'status bad';v.textContent=valid?'':message;
+  return {product,rec,entry,APercent,BPercent,days,remaining,firstDays:x.firstDays,extra:x.extraDays,firstLoss:x.firstLossKg,extraLoss:x.extraLossKg,total:x.totalLossKg,entryDateVal,calcDateVal,valid};
 }
-['fEntryDate','fCalcDate','fEntry','fA','fB','fRemaining'].forEach(id=>byId(id).addEventListener('input',calcFire));
+['fEntryDate','fCalcDate','fEntry','fRemaining'].forEach(id=>byId(id).addEventListener('input',calcFire));
+byId('fProduct').addEventListener('change',calcFire);
 
 
 let fire90Events=[];
 
-function getProductFireRate(name){
-  const p=PRODUCTS.find(x=>x.name===name);
-  return p && Number.isFinite(Number(p.fireRate)) ? Number(p.fireRate) : 0.002;
-}
+function getProductFireRate(name){ const r=currentCorrelation(name,byId('f90CalcDate').value); return r&&Number.isFinite(Number(r.bRate))?Number(r.bRate):0; }
 function isoFromDay(entryDateVal,dayNo){
   const t=parseDateOnly(entryDateVal);
   if(t===null||!Number.isFinite(dayNo))return '';
@@ -308,7 +292,7 @@ function saveHistory(type,summary,result){
 }
 byId('ltSave').onclick=()=>{const x=calcLT();saveHistory('Litre - Tonaj',`${x.product} • ${fmt(x.tank,0)} L • %${fmt(x.fillPercent,0)} • Plan ${fmt(x.plannedTon,3)} ton`,`${fmt(x.ton,3)} ton maks. • ${x.ok?'UYGUN':'UYGUN DEĞİL'}`);};
 byId('tlSave').onclick=()=>{const x=calcTL();saveHistory('Tonaj - Litre',`${x.product} • ${fmt(x.plannedTon,3)} ton • %${fmt(x.fillPercent,0)}`,`${fmt(x.requiredCapacity,2)} L gerekli kapasite • ${x.ok?'UYGUN':'UYGUN DEĞİL'}`);};
-byId('fSave').onclick=()=>{const x=calcFire();if(!x.valid)return;saveHistory('Fire',`${formatDateTR(x.entryDateVal)} → ${formatDateTR(x.calcDateVal)} • ${x.days} gün • A:%${fmt(x.APercent,2)} • B:%${fmt(x.BPercent,3)}`,`Toplam fire: ${fmt(x.total,3)} kg`);};
+byId('fSave').onclick=()=>{const x=calcFire();if(!x.valid)return;saveHistory('Fire',`${x.product} • ${formatDateTR(x.entryDateVal)} → ${formatDateTR(x.calcDateVal)} • ${x.days} gün • A:%${fmt(x.APercent,3)} • B:%${fmt(x.BPercent,4)}`,`Toplam fire: ${fmt(x.total,3)} kg`);};
 function renderHistory(){
   const rows=JSON.parse(localStorage.getItem(historyKey)||'[]');
   byId('historyCount').textContent=`${rows.length} kayıt`;
@@ -340,7 +324,7 @@ function renderSourceState(){
   }
 }
 
-const AUTH_HASH='3c0324ef3f647e882f320fc89c34f087fabbd593cc87c62b465563c40699565a';
+const AUTH_HASH='2939aef23445cab777b7959c3b7f674aaf7412391a52d762f877484de13f1ff7';
 const AUTH_SESSION_KEY='seymen_authorized_mode_v1';
 const TEMP_PRODUCTS_KEY='seymen_temp_products_v1';
 let selectedProductName=null;
@@ -367,21 +351,20 @@ function persistTempProducts(){
   if(isAuthorized()) sessionStorage.setItem(TEMP_PRODUCTS_KEY,JSON.stringify(PRODUCTS));
 }
 
+function correlationProducts(){return [...new Set(CORRELATIONS.map(r=>r.product).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'tr'));}
+function initCorrelationSelect(id,selected){const s=byId(id);const names=correlationProducts();s.innerHTML=names.map(n=>`<option ${n===selected?'selected':''}>${n}</option>`).join('');}
 function refreshProductSelects(){
-  const currentLT=byId('ltProduct').value;
-  const currentTL=byId('tlProduct').value;
-  const currentF90=byId('f90Product').value;
-  initSelect('ltProduct',PRODUCTS.some(p=>p.name===currentLT)?currentLT:PRODUCTS[0]?.name);
-  initSelect('tlProduct',PRODUCTS.some(p=>p.name===currentTL)?currentTL:PRODUCTS[0]?.name);
-  initSelect('f90Product',PRODUCTS.some(p=>p.name===currentF90)?currentF90:PRODUCTS[0]?.name);
-  calcLT(); calcTL(); syncFire90RateFromProduct();
+  const currentLT=byId('ltProduct').value,currentTL=byId('tlProduct').value,currentF=byId('fProduct')?.value,currentF90=byId('f90Product')?.value;
+  initSelect('ltProduct',PRODUCTS.some(p=>p.name===currentLT)?currentLT:PRODUCTS[0]?.name);initSelect('tlProduct',PRODUCTS.some(p=>p.name===currentTL)?currentTL:PRODUCTS[0]?.name);
+  initCorrelationSelect('fProduct',correlationProducts().includes(currentF)?currentF:'METHANOL');initCorrelationSelect('f90Product',correlationProducts().includes(currentF90)?currentF90:'METHANOL');
+  calcLT();calcTL();calcFire();syncFire90RateFromProduct();
 }
 
 function renderAuthState(){
   const on=isAuthorized();
   byId('authOpen').classList.toggle('hidden',on);
   byId('authLogout').classList.toggle('hidden',!on);
-  byId('productAdmin').classList.toggle('hidden',!on);
+  byId('productAdmin').classList.add('hidden');
   document.querySelectorAll('.admin-col').forEach(el=>el.classList.toggle('hidden',!on));
   byId('authOpen').textContent=on?'Geçici Yetkili Modu':'Yetkili Modu Aç';
   renderProducts(byId('productSearch').value||'');
@@ -453,11 +436,32 @@ renderProducts=function(filter=''){
   }
 }
 
+
+// V6 EK-11 yetkili veri yönetimi
+let selectedCorrId=null;
+function loadCorrelations(){if(isAuthorized()){try{const x=JSON.parse(sessionStorage.getItem(CORR_SESSION_KEY)||'null');if(Array.isArray(x)&&x.length)CORRELATIONS=x;}catch{}}}
+function saveCorrelations(){if(isAuthorized())sessionStorage.setItem(CORR_SESSION_KEY,JSON.stringify(CORRELATIONS));}
+function renderCorrelations(filter=''){
+ const q=filter.trim().toLocaleUpperCase('tr-TR');const rows=CORRELATIONS.filter(r=>[r.product,r.gtip,r.correlationGtip,r.correlationYear].some(v=>String(v??'').toLocaleUpperCase('tr-TR').includes(q)));
+ byId('corrRows').innerHTML=rows.map(r=>`<tr data-id="${r._id}" class="${r._id===selectedCorrId?'selected':''}"><td>${r.product}</td><td>${r.gtip||''}</td><td>${r.correlationYear??''}</td><td>${r.correlationGtip||''}</td><td class="rate">${r.aRate==null?'YOK':'%'+fmt(r.aRate,4)}</td><td class="rate">${r.bRate==null?'YOK':'%'+fmt(r.bRate,4)}</td></tr>`).join('');
+ byId('corrRows').querySelectorAll('tr').forEach(tr=>tr.onclick=()=>{selectedCorrId=Number(tr.dataset.id);const r=CORRELATIONS.find(x=>x._id===selectedCorrId);if(!r)return;byId('corrProduct').value=r.product;byId('corrGtip').value=r.gtip;byId('corrYear').value=r.correlationYear;byId('corrCorrGtip').value=r.correlationGtip;byId('corrA').value=r.aRate??'';byId('corrB').value=r.bRate??'';renderCorrelations(byId('corrSearch').value);});
+}
+function corrForm(){const rate=id=>byId(id).value.trim()===''?null:Number(byId(id).value);return{product:byId('corrProduct').value.trim(),gtip:byId('corrGtip').value.trim(),correlationYear:byId('corrYear').value.trim()||'YOK',correlationGtip:byId('corrCorrGtip').value.trim()||'YOK',aRate:rate('corrA'),bRate:rate('corrB')};}
+function clearCorrForm(){selectedCorrId=null;['corrProduct','corrGtip','corrYear','corrCorrGtip','corrA','corrB'].forEach(id=>byId(id).value='');renderCorrelations(byId('corrSearch').value);}
+function openDataPanel(){loadCorrelations();byId('dataPanel').classList.remove('hidden');renderCorrelations();}
+byId('dataGate').onclick=()=>{if(isAuthorized())openDataPanel();else{byId('authModal').classList.remove('hidden');byId('authPassword').value='';byId('authError').textContent='';byId('authPassword').focus();}};
+const oldSubmit=byId('authSubmit').onclick;byId('authSubmit').onclick=async()=>{await oldSubmit();if(isAuthorized())openDataPanel();};
+byId('dataClose').onclick=()=>byId('dataPanel').classList.add('hidden');byId('corrSearch').oninput=e=>renderCorrelations(e.target.value);byId('corrNew').onclick=clearCorrForm;
+byId('corrUpdate').onclick=()=>{if(!isAuthorized())return;const x=corrForm();if(!x.product){alert('Ürün adı zorunludur.');return;}if((x.aRate!==null&&!Number.isFinite(x.aRate))||(x.bRate!==null&&!Number.isFinite(x.bRate))){alert('Fire oranlarını sayısal girin.');return;}if(selectedCorrId){CORRELATIONS=CORRELATIONS.map(r=>r._id===selectedCorrId?{...r,...x}:r);}else{const max=Math.max(0,...CORRELATIONS.map(r=>r._id||0));CORRELATIONS.push({...x,_id:max+1});selectedCorrId=max+1;}saveCorrelations();refreshProductSelects();renderCorrelations(byId('corrSearch').value);};
+byId('corrDelete').onclick=()=>{if(!isAuthorized()||!selectedCorrId)return;CORRELATIONS=CORRELATIONS.filter(r=>r._id!==selectedCorrId);saveCorrelations();clearCorrForm();refreshProductSelects();};
+byId('dataLogout').onclick=()=>{sessionStorage.removeItem(AUTH_SESSION_KEY);sessionStorage.removeItem(CORR_SESSION_KEY);CORRELATIONS=BASE_CORRELATIONS.map((r,i)=>({...r,_id:i+1}));byId('dataPanel').classList.add('hidden');refreshProductSelects();renderAuthState();};
+byId('corrExcel').onchange=e=>{if(e.target.files?.length)alert('V6 web önizlemesinde EK-11 mevcut dosyası sisteme gömülüdür. Yeni XLSX aktarımı masaüstü veri merkezine bağlandığında kalıcı olarak işlenecektir.');e.target.value='';};
+
 if(!byId('fEntryDate').value) byId('fEntryDate').value='2024-06-28';
 if(!byId('f90EntryDate').value) byId('f90EntryDate').value='2026-05-01';
 if(!byId('f90CalcDate').value) byId('f90CalcDate').value=new Date().toISOString().slice(0,10);
-if(!byId('fCalcDate').value) byId('fCalcDate').value='2026-08-28';
-loadTempProducts();
+if(!byId('fCalcDate').value) byId('fCalcDate').value=new Date().toISOString().slice(0,10);
+loadTempProducts(); loadCorrelations();
 refreshProductSelects();
 renderAuthState();
 calcLT(); calcTL(); calcFire(); syncFire90RateFromProduct(); renderFire90Events(); renderProducts(); renderHistory(); renderSourceState();

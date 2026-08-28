@@ -19,9 +19,11 @@
         <div class="subtitle">Ş. Melih KARABAY için özenle hazırlanmıştır.</div>
       </div>
       <div class="brand-actions">
-        <button id="authOpen" class="auth-open">Yetkili Modu Aç</button>
-        <button id="authLogout" class="auth-logout hidden">Oturumu Kapat</button>
         <div id="syncBadge" class="sync-badge">☁ Eşitlendi</div>
+        <button id="dataGate" class="data-gate" title="Veri Girişi" aria-label="Veri Girişi">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h10v4h8v8h-8v4H3z"/><path d="M8 8l5 4-5 4z"/></svg>
+        </button>
+        <button id="authOpen" class="hidden"></button><button id="authLogout" class="hidden"></button>
       </div>
     </section>
 
@@ -34,7 +36,7 @@
     <div id="authModal" class="modal hidden">
       <div class="modal-card">
         <h3>Yetkili Modu</h3>
-        <p>Ürün ekleme, düzenleme ve silme kontrollerini açmak için şifreyi girin.</p>
+        <p>Korelasyon veri tablosuna erişmek için yetkili şifresini girin.</p>
         <input id="authPassword" type="password" placeholder="Şifre">
         <div id="authError" class="auth-error"></div>
         <div class="modal-actions">
@@ -101,14 +103,16 @@
         <div class="card">
           <div class="card-title"><h2>Ek-11 Antrepo Fire Hesabı</h2><span class="pill">90+ gün bileşik hesap</span></div>
           <div class="form-grid">
+            <label>Ürün Seçimi<select id="fProduct"></select></label>
             <label>Ürünün İlk Giriş Tarihi<input id="fEntryDate" type="date"></label>
             <label>Fire Hesaplama Tarihi<input id="fCalcDate" type="date"></label>
             <label>Giriş Miktarı (kg)<input id="fEntry" type="number" value="1720206"></label>
             <label>90 Gün Sonu Kalan Miktar (kg)<input id="fRemaining" type="number" value="115000"></label>
-            <label>İlk 90 Gün Fire Oranı (%)<input id="fA" type="number" step="0.01" value="0.40"></label>
-            <label>90 Gün Sonrası Günlük Fire Oranı (%)<input id="fB" type="number" step="0.001" value="0.002"></label>
+            <label>İlk 90 Gün Fire Oranı (%)<input id="fA" type="number" step="0.01" value="0.40" readonly></label>
+            <label>90 Gün Sonrası Günlük Fire Oranı (%)<input id="fB" type="number" step="0.001" value="0.002" readonly></label>
             <label>Toplam Kalış Süresi (gün)<input id="fDays" type="number" readonly></label>
           </div>
+          <div id="fireCorrelationInfo" class="correlation-strip"><span>Ürün seçildiğinde EK-11 korelasyon oranları otomatik yüklenir.</span></div>
           <div id="fireDateSummary" class="date-summary fire-summary">
             <div><span>İlk Giriş Tarihi</span><strong id="fEntryDateOut">-</strong></div>
             <div><span>Hesaplama Tarihi</span><strong id="fCalcDateOut">-</strong></div>
@@ -234,7 +238,32 @@
         </div>
       </section>
     </main>
+
+    <div id="dataPanel" class="data-panel hidden">
+      <div class="data-panel-card">
+        <div class="data-panel-head"><div><small>YETKİLİ VERİ GİRİŞİ</small><h2>EK 11 Korelasyon Tablosu</h2><p>Excel düzenine yakın merkezi fire oranı yönetimi.</p></div><button id="dataClose" class="icon-close">×</button></div>
+        <div class="data-actions">
+          <input id="corrSearch" placeholder="Ürün / GTİP ara...">
+          <button id="corrNew" class="secondary">Yeni</button>
+          <button id="corrUpdate" class="primary">Güncelle</button>
+          <button id="corrDelete" class="danger">Sil</button>
+          <label class="file-button">Excel Yükle<input id="corrExcel" type="file" accept=".xlsx,.xls" hidden></label>
+          <button id="dataLogout" class="secondary">Yetkili Çıkış</button>
+        </div>
+        <div class="corr-editor">
+          <input id="corrProduct" placeholder="ÜRÜN ADI">
+          <input id="corrGtip" placeholder="GÜNCEL GTIP NO">
+          <input id="corrYear" placeholder="KOLERASYON YIL">
+          <input id="corrCorrGtip" placeholder="KOLERASYON GTIP NO">
+          <input id="corrA" type="number" step="0.0001" placeholder="A FİRE %">
+          <input id="corrB" type="number" step="0.0001" placeholder="B FİRE %">
+        </div>
+        <div class="table-wrap corr-table-wrap"><table class="corr-table"><thead><tr><th>ÜRÜN ADI</th><th>GÜNCEL GTIP NO</th><th>KOLERASYON YIL</th><th>KOLERASYON GTIP NO</th><th>( A )1 GÜNCEL FİRE ORANI %</th><th>( B )2 GÜNCEL FİRE ORANI %</th></tr></thead><tbody id="corrRows"></tbody></table></div>
+        <div class="readonly-note">Değişiklikler bu web prototipinde yetkili oturum boyunca geçerlidir. Kalıcı merkez masaüstü uygulamasıdır.</div>
+      </div>
+    </div>
   </div>
+<script src="logic.js"></script>
 <script src="app.js"></script>
 </body>
 </html>

@@ -1,61 +1,28 @@
-# SEYMEN Hesaplama Merkezi - Web V1
+# SEYMEN Hesaplama Merkezi V6
 
-Bu sürüm ilk görsel/işlev kontrolü içindir.
+V6, V5 hesaplama modüllerini korur ve EK 11 korelasyon verisini ürün bazlı fire hesaplarına bağlar.
 
-## Açılış
-`index.html` dosyasını Chrome/Safari/Edge ile açın. Kurulum gerekmez.
+## V6 yenilikleri
+- Fire Hesaplama ekranında ürün seçimi sonrası A/B fire oranları EK 11 verisinden otomatik gelir.
+- İlk giriş tarihi ve hesaplama tarihi üzerinden toplam gün otomatik hesaplanır.
+- 90+ Günlük Fire ekranı ürünün B oranını otomatik kullanır; ara hareketler ve Excel uyumlu günlük rapor korunur.
+- Sağ üstte küçük kutuya giren ok simgesi Veri Girişi kapısıdır.
+- Yetkili giriş sonrası EK 11 Excel düzenine yakın tablo açılır; yeni kayıt, güncelleme ve silme yapılabilir.
+- Yetkili oturumundaki korelasyon değişiklikleri Fire ve 90+ Fire ekranlarına anlık yansır.
+- Ana Litre/Tonaj ve Tonaj/Litre hesapları V5 mantığıyla korunur.
 
-## Menüler
-- Litre - Tonaj
-- Tonaj - Litre
-- Fire Hesaplama
-- Ürünler
-- Geçmiş Hesaplamalar
+## Dosyalar
+GitHub Pages köküne şu dosyaları yükleyin:
+- `index.html`
+- `styles.css`
+- `logic.js`
+- `app.js`
+- `README.md`
 
-## Hesaplama kaynakları
-- `Litre ve Tonaj Hesaplama .xlsx`: ürün yoğunlukları ve litre/tonaj formülleri.
-- `ek11_fire_hesap_tablosuu.xlsx`: ilk 90 gün ve 90 gün sonrası bileşik fire formülü.
+## Veri mimarisi
+Statik web V6 bir prototiptir. EK 11 başlangıç verisi pakete gömülüdür. Yetkili web değişiklikleri oturum boyunca saklanır. Kalıcı ana veri merkezi masaüstü uygulaması olarak tasarlanmıştır.
 
-## Fire kuralı
-90 gün sonrası ek fire:
-`90 gün sonu kalan miktar × [1 - (1 - günlük B oranı) ^ aşan gün]`
+Yeni Excel dosyasının kalıcı içe aktarımı, masaüstü veri katmanı/backend bağlantısında işlenecektir. V6 web ekranındaki Excel Yükle kontrolü bu akış için hazırlanmış arayüzdür.
 
-Bu nedenle her gün fire, azalan kalan bakiye üzerinden devam eder.
-
-## Masaüstü bağlantısı
-Bu V1'de gerçek sunucu bağlantısı henüz yoktur. Ön yüz, `seymen_desktop_sources`
-kaynağını okuyacak şekilde hazırlanmıştır. Backend aşamasında masaüstü uygulaması bu
-kaynak durumunu sunucu üzerinden besleyecektir.
-
-Birden fazla masaüstü kaynak algılanırsa web üst bölümünde:
-`Hesaplama verilerinde hata olabilir. 2 kullanıcı verisi çekilmektedir.`
-uyarısı görünür.
-
-Kalıcı ürün verisinin merkezi masaüstü uygulaması olacaktır.
-
-## Yetkili Modu
-- Ürünler sayfasında `Yetkili Modu Aç` düğmesi vardır.
-- Doğru şifre girildiğinde ürün ekleme, düzenleme ve silme kontrolleri açılır.
-- Yetki ve geçici ürün değişiklikleri yalnızca açık sekmede tutulur (`sessionStorage`).
-- Sayfa yenilenirse aynı sekmede korunur.
-- Sekme kapanınca veya `Oturumu Kapat` seçilince yetki ve geçici değişiklikler silinir.
-- Bu V1 statik prototiptir; üretim sürümünde parola doğrulaması sunucu tarafına taşınacaktır.
-
-## Fire V4
-- Ürünün ilk giriş tarihi ve fire hesaplama tarihi kullanıcı tarafından seçilir.
-- Toplam kalış süresi iki tarih arasından otomatik hesaplanır.
-- İlk 90 gün ve 90 gün sonrası süre ayrı gösterilir.
-- A ve B oranları kullanıcıya yüzde biçiminde gösterilir:
-  - `%0,40` -> hesaplamada `0,004`
-  - `%0,002` -> hesaplamada `0,00002`
-- Sonuç ekranında tarihler, süreler ve kullanılan oranlar birlikte görüntülenir.
-
-## V5
-- Dolum oranı alanları yüzde olarak girilir: 95 = %95.
-- Tank Hacmi, Araç Kapasitesi (L) olarak adlandırıldı.
-- ADR Max yerine Alınmak İstenen Tonaj ve araç kapasitesi mantığı kullanılır.
-- Yeni 4. menü: % - 90+ Üzeri Günlük Hesaplama.
-- Ürün bazlı 90+ günlük fire oranı Yetkili Modu'nda değiştirilebilir.
-- Referans gün kalan tonajı ile hesap yeniden başlatılabilir.
-- Araç çıkışı / kalan toplam tonaj hareketleri günlük rapora eklenebilir.
-- Excel uyumlu .xls günlük rapor indirilebilir.
+## Güvenlik
+Statik prototip şifrenin kendisini kaynakta tutmaz, yalnız SHA-256 özetini karşılaştırır. Üretimde yetki doğrulamasının masaüstü/sunucu tarafında yapılması gerekir.
