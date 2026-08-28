@@ -30,6 +30,11 @@ Masaüstü ve web aynı menü sırasını kullanır. Yetki farkları ekranların
 
 Uygulama, kaynak Excel dosyalarının okunaklı tablo dilini koruyarak modern bir masaüstü/web arayüzüne uyarlanacaktır:
 
+- Masaüstü ve web uygulamalarının her ekranında, içerik başlığının üzerinde tam genişlikte sarı bir marka bandı bulunur.
+- Marka bandının birinci satırında koyu mavi, kalın ve büyük harflerle `SEYMEN` etiketi gösterilir.
+- Etiketin hemen altında aynı koyu mavi rengin daha küçük ve zarif yazı biçimiyle **Ş. Melih KARABAY için özenle hazırlanmıştır.** notu yer alır.
+- Marka bandı için erişilebilir kontrast sağlayan sarı `#F4C542` ve koyu mavi `#123A63` temel renkleri kullanılır.
+- Marka bandı ve iki metin, beş menü ekranının tamamında görünür; masaüstü ve web sürümlerinde kaldırılmaz veya farklı metinle değiştirilmez.
 - Sol tarafta sabit menü, sağ tarafta seçili ekran bulunur.
 - Başlıklar Excel’deki koyu mavi görsel dili izler.
 - Düzenlenebilir giriş alanları açık sarı renkle belirtilir.
@@ -252,6 +257,7 @@ Masaüstü ve web aynı hesaplama paketini ve mümkün olan en geniş ölçüde 
 - Yalnızca giriş alanlarının düzenlenebilir olduğu doğrulanır.
 - Girdi değiştiğinde sonuçların otomatik hesaplandığı doğrulanır.
 - Masaüstü ve web yetki farkları uçtan uca test edilir.
+- Her ekranın sarı marka bandında mavi `SEYMEN` etiketi ile **Ş. Melih KARABAY için özenle hazırlanmıştır.** notunun bulunduğu doğrulanır.
 - Windows EXE temiz bir Windows ortamında kurulum/açılış testiyle doğrulanır.
 
 ## 12. GitHub ve Dağıtım
@@ -284,3 +290,4 @@ Masaüstü ve web aynı hesaplama paketini ve mümkün olan en geniş ölçüde 
 8. Masaüstü değişiklikleri internet geldiğinde web’e aktarılır.
 9. Web’den ürün, geçmiş veya formül değişikliği yapılamaz.
 10. Kaynak Excel örnekleriyle yapılan formül doğrulama testleri geçer.
+11. Masaüstü ve web’deki beş ekranın tamamında sarı bant üzerinde mavi `SEYMEN` etiketi ve altında **Ş. Melih KARABAY için özenle hazırlanmıştır.** notu görünür.
