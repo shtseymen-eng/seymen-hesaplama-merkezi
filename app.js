@@ -39,17 +39,70 @@ function calcTL(){
 }
 ['tlProduct','tlFill','tlKg','tlAdr'].forEach(id=>byId(id).addEventListener('input',calcTL));
 
-function calcFire(){
-  const entry=+byId('fEntry').value||0, A=+byId('fA').value||0, B=+byId('fB').value||0, days=Math.max(0,+byId('fDays').value||0), remaining=+byId('fRemaining').value||0;
-  const firstDays=Math.min(days,90), extra=Math.max(days-90,0);
-  const firstLoss=entry*A;
-  const extraLoss=remaining*(1-Math.pow(1-B,extra));
-  const total=firstLoss+extraLoss;
-  byId('fFirstDays').textContent=fmt(firstDays,0); byId('fExtraDays').textContent=fmt(extra,0);
-  byId('fFirstLoss').textContent=fmt(firstLoss,3); byId('fExtraLoss').textContent=fmt(extraLoss,3); byId('fTotalLoss').textContent=fmt(total,3);
-  return {entry,A,B,days,remaining,firstDays,extra,firstLoss,extraLoss,total};
+function parseDateOnly(value){
+  if(!value) return null;
+  const parts=value.split('-').map(Number);
+  if(parts.length!==3||parts.some(x=>!Number.isFinite(x))) return null;
+  return Date.UTC(parts[0],parts[1]-1,parts[2]);
 }
-['fEntry','fA','fB','fDays','fRemaining'].forEach(id=>byId(id).addEventListener('input',calcFire));
+function formatDateTR(value){
+  if(!value) return '-';
+  const [y,m,d]=value.split('-');
+  return `${d}.${m}.${y}`;
+}
+function calcFire(){
+  const entry=+byId('fEntry').value||0;
+  const A=+byId('fA').value||0;
+  const B=+byId('fB').value||0;
+  const remaining=+byId('fRemaining').value||0;
+  const entryDateVal=byId('fEntryDate').value;
+  const calcDateVal=byId('fCalcDate').value;
+  const entryDate=parseDateOnly(entryDateVal);
+  const calcDate=parseDateOnly(calcDateVal);
+
+  let days=0;
+  let valid=true;
+  let message='';
+
+  if(entryDate===null||calcDate===null){
+    valid=false;
+    message='Ürünün giriş tarihi ve hesaplama tarihini seçin.';
+  }else if(calcDate<entryDate){
+    valid=false;
+    message='Hesaplama tarihi, ürün giriş tarihinden önce olamaz.';
+  }else{
+    days=Math.floor((calcDate-entryDate)/86400000);
+  }
+
+  byId('fDays').value=valid?days:'';
+  byId('fEntryDateOut').textContent=formatDateTR(entryDateVal);
+  byId('fCalcDateOut').textContent=formatDateTR(calcDateVal);
+  byId('fDaysOut').textContent=valid?fmt(days,0):'-';
+
+  const firstDays=valid?Math.min(days,90):0;
+  const extra=valid?Math.max(days-90,0):0;
+  const firstLoss=valid?entry*A:0;
+  const extraLoss=valid?remaining*(1-Math.pow(1-B,extra)):0;
+  const total=firstLoss+extraLoss;
+
+  byId('fFirstDays').textContent=valid?fmt(firstDays,0):'-';
+  byId('fExtraDays').textContent=valid?fmt(extra,0):'-';
+  byId('fFirstLoss').textContent=valid?fmt(firstLoss,3):'-';
+  byId('fExtraLoss').textContent=valid?fmt(extraLoss,3):'-';
+  byId('fTotalLoss').textContent=valid?fmt(total,3):'-';
+
+  const validation=byId('fireValidation');
+  if(valid){
+    validation.className='status hidden';
+    validation.textContent='';
+  }else{
+    validation.className='status bad';
+    validation.textContent=message;
+  }
+
+  return {entry,A,B,days,remaining,firstDays,extra,firstLoss,extraLoss,total,entryDateVal,calcDateVal,valid};
+}
+['fEntryDate','fCalcDate','fEntry','fA','fB','fRemaining'].forEach(id=>byId(id).addEventListener('input',calcFire));
 
 function saveHistory(type,summary,result){
   const rows=JSON.parse(localStorage.getItem(historyKey)||'[]');
@@ -58,7 +111,7 @@ function saveHistory(type,summary,result){
 }
 byId('ltSave').onclick=()=>{const x=calcLT();saveHistory('Litre - Tonaj',`${x.product} • ${fmt(x.tank,0)} L • %${fmt(x.fill*100,0)}`,`${fmt(x.ton,5)} ton • ${x.ok?'UYGUN':'AŞIM VAR'}`);};
 byId('tlSave').onclick=()=>{const x=calcTL();saveHistory('Tonaj - Litre',`${x.product} • ${fmt(x.kg,0)} kg`,`${fmt(x.tank,2)} L • ${x.ok?'UYGUN':'AŞIM VAR'}`);};
-byId('fSave').onclick=()=>{const x=calcFire();saveHistory('Fire',`${fmt(x.entry,0)} kg • ${x.days} gün`,`Toplam fire: ${fmt(x.total,3)} kg`);};
+byId('fSave').onclick=()=>{const x=calcFire();if(!x.valid)return;saveHistory('Fire',`${formatDateTR(x.entryDateVal)} → ${formatDateTR(x.calcDateVal)} • ${x.days} gün • ${fmt(x.entry,0)} kg`,`Toplam fire: ${fmt(x.total,3)} kg`);};
 function renderHistory(){
   const rows=JSON.parse(localStorage.getItem(historyKey)||'[]');
   byId('historyCount').textContent=`${rows.length} kayıt`;
@@ -199,6 +252,8 @@ renderProducts=function(filter=''){
   }
 }
 
+if(!byId('fEntryDate').value) byId('fEntryDate').value='2024-06-28';
+if(!byId('fCalcDate').value) byId('fCalcDate').value='2026-08-28';
 loadTempProducts();
 refreshProductSelects();
 renderAuthState();
