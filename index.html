@@ -228,8 +228,15 @@
       <section id="page-history" class="page">
         <div class="hero"><div><h1>Geçmiş Hesaplamalar</h1><p>Bu tarayıcıda kaydedilen son hesaplamaları görüntüleyin.</p></div></div>
         <div class="card">
+          <div class="card-title"><h2>Hesaplama Geçmişi</h2></div>
           <div class="toolbar"><button class="danger" id="clearHistory">Geçmişi Temizle</button><span id="historyCount"></span></div>
           <div class="table-wrap"><table><thead><tr><th>Tarih</th><th>Tür</th><th>Özet</th><th>Sonuç</th></tr></thead><tbody id="historyRows"></tbody></table></div>
+        </div>
+        <div id="auditHistory" class="card hidden">
+          <div class="card-title"><h2>Veri Değişiklikleri</h2><span class="pill">Yetkili</span></div>
+          <p class="muted">Başarılı ürün ve EK-11 değişiklikleri otomatik kaydedilir; bu liste silinemez.</p>
+          <div id="auditState" class="save-state" role="status" aria-live="polite"></div>
+          <div class="table-wrap audit-table-wrap"><table><thead><tr><th>Tarih ve Saat</th><th>Veri</th><th>İşlem</th><th>Ürün</th><th>Önceki Değer</th><th>Yeni Değer</th><th>İşlem Sahibi</th></tr></thead><tbody id="auditRows"></tbody></table></div>
         </div>
       </section>
     </main>
@@ -242,7 +249,6 @@
           <button id="corrNew" class="secondary">Yeni</button>
           <button id="corrUpdate" class="primary">Güncelle</button>
           <button id="corrDelete" class="danger">Sil</button>
-          <label class="file-button">Excel Yükle<input id="corrExcel" type="file" accept=".xlsx,.xls" hidden></label>
           <button id="dataLogout" class="secondary">Yetkili Çıkış</button>
         </div>
         <div class="corr-editor">
@@ -253,6 +259,7 @@
           <input id="corrA" type="number" step="0.0001" placeholder="A FİRE %">
           <input id="corrB" type="number" step="0.0001" placeholder="B FİRE %">
         </div>
+        <div id="corrSaveState" class="save-state" role="status" aria-live="polite"></div>
         <div class="table-wrap corr-table-wrap"><table class="corr-table"><thead><tr><th>ÜRÜN ADI</th><th>GÜNCEL GTIP NO</th><th>KOLERASYON YIL</th><th>KOLERASYON GTIP NO</th><th>( A )1 GÜNCEL FİRE ORANI %</th><th>( B )2 GÜNCEL FİRE ORANI %</th></tr></thead><tbody id="corrRows"></tbody></table></div>
         <div class="readonly-note">Güncellediğiniz EK-11 kaydı tüm kullanıcılara yayınlanır.</div>
       </div>
@@ -261,6 +268,7 @@
 <script src="logic.js"></script>
 <script src="site-config.js"></script>
 <script src="data-client.js"></script>
+<script src="ui-format.js"></script>
 <script src="app.js"></script>
 </body>
 </html>

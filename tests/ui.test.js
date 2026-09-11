@@ -29,3 +29,13 @@ test('yetkili ürün editörü yoğunluk kaydını ortak veriye yayınlamak içi
   assert.match(html, /id="corrDelete"/);
   assert.doesNotMatch(html, /masaüstü/i);
 });
+
+test('yetkili veri değişiklikleri hesaplama geçmişinde ayrı ve silinemez gösterilir', () => {
+  assert.match(html, /id="auditHistory"[^>]*hidden/);
+  assert.match(html, /id="auditRows"/);
+  assert.match(html, /<th>Tarih ve Saat<\/th>/);
+  assert.match(html, /<th>Önceki Değer<\/th>/);
+  assert.match(html, /<th>Yeni Değer<\/th>/);
+  assert.match(html, /id="corrSaveState"/);
+  assert.doesNotMatch(html, /id="corrExcel"|Excel Yükle/);
+});

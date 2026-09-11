@@ -29,3 +29,9 @@ test('yetkili ürün satırını çift tıklayarak editörü açar', () => {
   assert.match(app, /productAdmin'\)\.classList\.remove\('hidden'\)/);
   assert.doesNotMatch(app, /adminFireRate/);
 });
+
+test('yetkili geçmiş sayfasında sunucudaki veri değişikliklerini yükler', () => {
+  assert.match(app, /async function renderAuditHistory/);
+  assert.match(app, /dataClient\.loadAudit\(\)/);
+  assert.match(app, /auditHistory'\)\.classList\.toggle\('hidden',!on\)/);
+});

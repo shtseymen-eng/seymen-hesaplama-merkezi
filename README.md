@@ -1,28 +1,24 @@
-# SEYMEN Hesaplama Merkezi V6
+# SEYMEN Fire/Tonaj Hesaplama Sistemi
 
-V6, V5 hesaplama modüllerini korur ve EK 11 korelasyon verisini ürün bazlı fire hesaplarına bağlar.
+Web uygulaması; litre-tonaj, tonaj-litre ve EK-11 fire hesaplarını tek adreste sunar. Hesaplama ekranları tüm ziyaretçilere açıktır.
 
-## V6 yenilikleri
-- Fire Hesaplama ekranında ürün seçimi sonrası A/B fire oranları EK 11 verisinden otomatik gelir.
-- İlk giriş tarihi ve hesaplama tarihi üzerinden toplam gün otomatik hesaplanır.
-- 90+ Günlük Fire ekranı ürünün B oranını otomatik kullanır; ara hareketler ve Excel uyumlu günlük rapor korunur.
-- Sağ üstte küçük kutuya giren ok simgesi Veri Girişi kapısıdır.
-- Yetkili giriş sonrası EK 11 Excel düzenine yakın tablo açılır; yeni kayıt, güncelleme ve silme yapılabilir.
-- Yetkili oturumundaki korelasyon değişiklikleri Fire ve 90+ Fire ekranlarına anlık yansır.
-- Ana Litre/Tonaj ve Tonaj/Litre hesapları V5 mantığıyla korunur.
+## Yetkili işlemleri
 
-## Dosyalar
-GitHub Pages köküne şu dosyaları yükleyin:
-- `index.html`
-- `styles.css`
-- `logic.js`
-- `app.js`
-- `README.md`
+- Yetkili girişinden sonra ürün satırına çift tıklanarak ürün adı ve yoğunluğu düzenlenebilir.
+- EK-11 panelinde yeni kayıt oluşturulabilir, mevcut kayıt güncellenebilir veya silinebilir.
+- Başarılı değişiklikler ortak veri hizmetine kaydedilir ve tüm kullanıcılara yayınlanır.
+- Her ekleme, güncelleme ve silme işlemi; sunucu tarih-saati, önceki değer ve yeni değerle birlikte yetkili geçmişinde tutulur.
+- Fire hesapları, yayınlanan güncel EK-11 A/B oranlarını kullanır.
 
 ## Veri mimarisi
-Statik web V6 bir prototiptir. EK 11 başlangıç verisi pakete gömülüdür. Yetkili web değişiklikleri oturum boyunca saklanır. Kalıcı ana veri merkezi masaüstü uygulaması olarak tasarlanmıştır.
 
-Yeni Excel dosyasının kalıcı içe aktarımı, masaüstü veri katmanı/backend bağlantısında işlenecektir. V6 web ekranındaki Excel Yükle kontrolü bu akış için hazırlanmış arayüzdür.
+GitHub Pages arayüzü ortak HTTPS veri hizmetinden yayınlanmış ürün ve EK-11 kayıtlarını alır. Hizmete geçici olarak ulaşılamazsa son başarılı veri kopyası, o da yoksa gömülü başlangıç verisi kullanılır.
 
 ## Güvenlik
-Statik prototip şifrenin kendisini kaynakta tutmaz, yalnız SHA-256 özetini karşılaştırır. Üretimde yetki doğrulamasının masaüstü/sunucu tarafında yapılması gerekir.
+
+Yetkili şifresi tarayıcı kodunda tutulmaz. Doğrulama veri hizmetinde yapılır; başarılı girişten sonra süreli ve imzalı bir oturum belirteci kullanılır. Yazma istekleri yetki, alan ve sürüm denetiminden geçer.
+
+## Geliştirme
+
+- `npm test`: hesaplama, veri hizmeti, yetkilendirme ve arayüz testlerini çalıştırır.
+- `npm run build`: veri hizmetinin yayın paketini `dist/` klasörüne hazırlar.

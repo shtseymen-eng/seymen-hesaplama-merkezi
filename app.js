@@ -16,6 +16,7 @@ const normalizeProducts=rows=>rows.map((p,i)=>({
 }));
 let PRODUCTS=normalizeProducts(BASE_PRODUCTS);
 const dataClient=SeymenDataClient.create({baseUrl:window.SEYMEN_CONFIG?.apiBaseUrl||''});
+const {escapeHtml,formatAuditValues,formatIstanbulDate}=SeymenUiFormat;
 const fmt=(n,d=2)=>Number(n).toLocaleString('tr-TR',{minimumFractionDigits:d,maximumFractionDigits:d});
 const byId=id=>document.getElementById(id);
 const density=name=>(PRODUCTS.find(p=>p.name===name)||{density:0}).density;
@@ -23,7 +24,7 @@ const historyKey='seymen_web_history_v1';
 
 function initSelect(id, selected){
   const s=byId(id);
-  s.innerHTML=PRODUCTS.map(p=>`<option ${p.name===selected?'selected':''}>${p.name}</option>`).join('');
+  s.innerHTML=PRODUCTS.map(p=>`<option ${p.name===selected?'selected':''}>${escapeHtml(p.name)}</option>`).join('');
 }
 initSelect('ltProduct','POLYOL 0548'); initSelect('tlProduct','METHANOL');
 
@@ -31,7 +32,7 @@ document.querySelectorAll('#mainNav button').forEach(btn=>btn.addEventListener('
   document.querySelectorAll('#mainNav button').forEach(x=>x.classList.remove('active'));
   document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
   btn.classList.add('active'); byId('page-'+btn.dataset.page).classList.add('active');
-  if(btn.dataset.page==='history') renderHistory();
+  if(btn.dataset.page==='history'){renderHistory();renderAuditHistory();}
 }));
 
 function calcLT(){
@@ -100,11 +101,11 @@ function syncFireCorrelation(){
   const info=byId('fireCorrelationInfo');
   if(!rec || rec.aRate===null || rec.bRate===null){
     byId('fA').value='';byId('fB').value='';
-    info.innerHTML=`<b>${byId('fProduct').value||'-'}</b> • Bu ürün için kullanılabilir A/B fire oranı tanımlı değildir.`;
+    info.innerHTML=`<b>${escapeHtml(byId('fProduct').value||'-')}</b> • Bu ürün için kullanılabilir A/B fire oranı tanımlı değildir.`;
     info.classList.add('warning');
   }else{
     byId('fA').value=rec.aRate;byId('fB').value=rec.bRate;
-    info.innerHTML=`<b>${rec.product}</b> • Korelasyon: ${rec.correlationYear} • A: %${fmt(rec.aRate,3)} • B: %${fmt(rec.bRate,4)} • GTİP: ${rec.gtip||'-'}`;
+    info.innerHTML=`<b>${escapeHtml(rec.product)}</b> • Korelasyon: ${escapeHtml(rec.correlationYear)} • A: %${fmt(rec.aRate,3)} • B: %${fmt(rec.bRate,4)} • GTİP: ${escapeHtml(rec.gtip||'-')}`;
     info.classList.remove('warning');
   }
 }
@@ -306,15 +307,31 @@ byId('fSave').onclick=()=>{const x=calcFire();if(!x.valid)return;saveHistory('Fi
 function renderHistory(){
   const rows=JSON.parse(localStorage.getItem(historyKey)||'[]');
   byId('historyCount').textContent=`${rows.length} kayıt`;
-  byId('historyRows').innerHTML=rows.length?rows.map(r=>`<tr><td>${r.date}</td><td>${r.type}</td><td>${r.summary}</td><td>${r.result}</td></tr>`).join(''):'<tr><td class="empty" colspan="4">Henüz kayıt yok.</td></tr>';
+  byId('historyRows').innerHTML=rows.length?rows.map(r=>`<tr><td>${escapeHtml(r.date)}</td><td>${escapeHtml(r.type)}</td><td>${escapeHtml(r.summary)}</td><td>${escapeHtml(r.result)}</td></tr>`).join(''):'<tr><td class="empty" colspan="4">Henüz kayıt yok.</td></tr>';
 }
 byId('clearHistory').onclick=()=>{localStorage.removeItem(historyKey);renderHistory();};
+
+async function renderAuditHistory(){
+  if(!isAuthorized())return;
+  const state=byId('auditState');
+  state.className='save-state';
+  state.textContent='Değişiklik geçmişi yükleniyor...';
+  try{
+    const rows=await dataClient.loadAudit();
+    byId('auditRows').innerHTML=rows.length?rows.map(row=>`<tr><td>${escapeHtml(formatIstanbulDate(row.changedAt))}</td><td>${escapeHtml(row.entityType)}</td><td>${escapeHtml(row.action)}</td><td>${escapeHtml(row.entityName)}</td><td class="audit-values">${escapeHtml(formatAuditValues(row.beforeValues))}</td><td class="audit-values">${escapeHtml(formatAuditValues(row.afterValues))}</td><td>${escapeHtml(row.actor||'Yetkili')}</td></tr>`).join(''):'<tr><td class="empty" colspan="7">Henüz veri değişikliği yok.</td></tr>';
+    state.textContent=`${rows.length} değişiklik kaydı`;
+  }catch(error){
+    byId('auditRows').innerHTML='<tr><td class="empty" colspan="7">Değişiklik geçmişi yüklenemedi.</td></tr>';
+    state.className='save-state bad';
+    state.textContent=error.message||'Değişiklik geçmişi yüklenemedi.';
+  }
+}
 
 function renderProducts(filter=''){
   const q=filter.trim().toLocaleUpperCase('tr-TR');
   const rows=PRODUCTS.filter(p=>p.name.toLocaleUpperCase('tr-TR').includes(q));
   const auth=isAuthorized();
-  byId('productRows').innerHTML=rows.map(p=>`<tr class="${p.id===selectedProductId?'selected':''}" data-product-id="${p.id}">${auth?`<td class="admin-col"><input class="select-product" type="radio" name="prodsel" ${p.id===selectedProductId?'checked':''}></td>`:''}<td>${p.name}</td><td>${fmt(p.density,4)}</td><td>%${fmt(Number(p.fireRate??0.002),3)}</td></tr>`).join('');
+  byId('productRows').innerHTML=rows.map(p=>`<tr class="${p.id===selectedProductId?'selected':''}" data-product-id="${p.id}">${auth?`<td class="admin-col"><input class="select-product" type="radio" name="prodsel" ${p.id===selectedProductId?'checked':''}></td>`:''}<td>${escapeHtml(p.name)}</td><td>${fmt(p.density,4)}</td><td>%${fmt(Number(p.fireRate??0.002),3)}</td></tr>`).join('');
   byId('productCount').textContent=`${rows.length} / ${PRODUCTS.length} ürün`;
 }
 byId('productSearch').addEventListener('input',e=>renderProducts(e.target.value));
@@ -376,7 +393,7 @@ function isAuthorized(){
 }
 
 function correlationProducts(){return [...new Set(CORRELATIONS.map(r=>r.product).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'tr'));}
-function initCorrelationSelect(id,selected){const s=byId(id);const names=correlationProducts();s.innerHTML=names.map(n=>`<option ${n===selected?'selected':''}>${n}</option>`).join('');}
+function initCorrelationSelect(id,selected){const s=byId(id);const names=correlationProducts();s.innerHTML=names.map(n=>`<option ${n===selected?'selected':''}>${escapeHtml(n)}</option>`).join('');}
 function refreshProductSelects(){
   const currentLT=byId('ltProduct').value,currentTL=byId('tlProduct').value,currentF=byId('fProduct')?.value,currentF90=byId('f90Product')?.value;
   initSelect('ltProduct',PRODUCTS.some(p=>p.name===currentLT)?currentLT:PRODUCTS[0]?.name);initSelect('tlProduct',PRODUCTS.some(p=>p.name===currentTL)?currentTL:PRODUCTS[0]?.name);
@@ -389,9 +406,11 @@ function renderAuthState(){
   byId('authOpen').classList.toggle('hidden',on);
   byId('authLogout').classList.toggle('hidden',!on);
   if(!on)byId('productAdmin').classList.add('hidden');
+  byId('auditHistory').classList.toggle('hidden',!on);
   document.querySelectorAll('.admin-col').forEach(el=>el.classList.toggle('hidden',!on));
   byId('authOpen').textContent='Yetkili Modu Aç';
   renderProducts(byId('productSearch').value||'');
+  if(on&&byId('page-history').classList.contains('active'))renderAuditHistory();
 }
 
 byId('authOpen').onclick=()=>{byId('authModal').classList.remove('hidden');byId('authPassword').value='';byId('authError').textContent='';byId('authPassword').focus();};
@@ -428,6 +447,7 @@ byId('adminAdd').onclick=async()=>{
     PRODUCTS=[...PRODUCTS,saved].sort((a,b)=>a.name.localeCompare(b.name,'tr'));
     selectedProductId=saved.id;refreshProductSelects();renderProducts();
     setProductSaveState('Ürün kaydedildi ve tüm kullanıcılara yayınlandı.','ok');
+    renderAuditHistory();
   }catch(error){setProductSaveState(error.message||'Ürün kaydedilemedi.','bad');}
   finally{byId('adminAdd').disabled=false;}
 };
@@ -446,6 +466,7 @@ byId('adminUpdate').onclick=async()=>{
     PRODUCTS=PRODUCTS.map(p=>p.id===current.id?saved:p);
     refreshProductSelects();renderProducts();
     setProductSaveState('Değişiklik kaydedildi ve tüm kullanıcılara yayınlandı.','ok');
+    renderAuditHistory();
   }catch(error){setProductSaveState(error.message||'Ürün güncellenemedi.','bad');}
   finally{byId('adminUpdate').disabled=false;}
 };
@@ -463,6 +484,7 @@ byId('adminDelete').onclick=async()=>{
     selectedProductId=null;byId('adminName').value='';byId('adminDensity').value='';
     refreshProductSelects();renderProducts();
     setProductSaveState('Ürün silindi ve değişiklik tüm kullanıcılara yayınlandı.','ok');
+    renderAuditHistory();
   }catch(error){setProductSaveState(error.message||'Ürün silinemedi.','bad');}
   finally{byId('adminDelete').disabled=false;}
 };
@@ -470,21 +492,64 @@ byId('adminDelete').onclick=async()=>{
 
 // V6 EK-11 yetkili veri yönetimi
 let selectedCorrId=null;
+function setCorrSaveState(message,type=''){
+  const state=byId('corrSaveState');
+  state.textContent=message;
+  state.className=`save-state ${type}`.trim();
+}
 function renderCorrelations(filter=''){
  const q=filter.trim().toLocaleUpperCase('tr-TR');const rows=CORRELATIONS.filter(r=>[r.product,r.gtip,r.correlationGtip,r.correlationYear].some(v=>String(v??'').toLocaleUpperCase('tr-TR').includes(q)));
- byId('corrRows').innerHTML=rows.map(r=>`<tr data-id="${r._id}" class="${r._id===selectedCorrId?'selected':''}"><td>${r.product}</td><td>${r.gtip||''}</td><td>${r.correlationYear??''}</td><td>${r.correlationGtip||''}</td><td class="rate">${r.aRate==null?'YOK':'%'+fmt(r.aRate,4)}</td><td class="rate">${r.bRate==null?'YOK':'%'+fmt(r.bRate,4)}</td></tr>`).join('');
+ byId('corrRows').innerHTML=rows.map(r=>`<tr data-id="${r._id}" class="${r._id===selectedCorrId?'selected':''}"><td>${escapeHtml(r.product)}</td><td>${escapeHtml(r.gtip||'')}</td><td>${escapeHtml(r.correlationYear??'')}</td><td>${escapeHtml(r.correlationGtip||'')}</td><td class="rate">${r.aRate==null?'YOK':'%'+fmt(r.aRate,4)}</td><td class="rate">${r.bRate==null?'YOK':'%'+fmt(r.bRate,4)}</td></tr>`).join('');
  byId('corrRows').querySelectorAll('tr').forEach(tr=>tr.onclick=()=>{selectedCorrId=Number(tr.dataset.id);const r=CORRELATIONS.find(x=>x._id===selectedCorrId);if(!r)return;byId('corrProduct').value=r.product;byId('corrGtip').value=r.gtip;byId('corrYear').value=r.correlationYear;byId('corrCorrGtip').value=r.correlationGtip;byId('corrA').value=r.aRate??'';byId('corrB').value=r.bRate??'';renderCorrelations(byId('corrSearch').value);});
 }
 function corrForm(){const rate=id=>byId(id).value.trim()===''?null:Number(byId(id).value);return{product:byId('corrProduct').value.trim(),gtip:byId('corrGtip').value.trim(),correlationYear:byId('corrYear').value.trim()||'YOK',correlationGtip:byId('corrCorrGtip').value.trim()||'YOK',aRate:rate('corrA'),bRate:rate('corrB')};}
-function clearCorrForm(){selectedCorrId=null;['corrProduct','corrGtip','corrYear','corrCorrGtip','corrA','corrB'].forEach(id=>byId(id).value='');renderCorrelations(byId('corrSearch').value);}
-function openDataPanel(){byId('dataPanel').classList.remove('hidden');renderCorrelations();}
+function clearCorrForm(){selectedCorrId=null;['corrProduct','corrGtip','corrYear','corrCorrGtip','corrA','corrB'].forEach(id=>byId(id).value='');setCorrSaveState('');renderCorrelations(byId('corrSearch').value);}
+function openDataPanel(){byId('dataPanel').classList.remove('hidden');setCorrSaveState('');renderCorrelations();}
 byId('dataGate').onclick=()=>{if(isAuthorized())openDataPanel();else{byId('authModal').classList.remove('hidden');byId('authPassword').value='';byId('authError').textContent='';byId('authPassword').focus();}};
 const oldSubmit=byId('authSubmit').onclick;byId('authSubmit').onclick=async()=>{await oldSubmit();if(isAuthorized())openDataPanel();};
 byId('dataClose').onclick=()=>byId('dataPanel').classList.add('hidden');byId('corrSearch').oninput=e=>renderCorrelations(e.target.value);byId('corrNew').onclick=clearCorrForm;
-byId('corrUpdate').onclick=async()=>{if(!isAuthorized())return;const x=corrForm();if(!x.product){alert('Ürün adı zorunludur.');return;}if((x.aRate!==null&&!Number.isFinite(x.aRate))||(x.bRate!==null&&!Number.isFinite(x.bRate))){alert('Fire oranlarını sayısal girin.');return;}try{if(selectedCorrId){const current=CORRELATIONS.find(r=>r._id===selectedCorrId);const saved=await dataClient.updateCorrelation(current.id,{...x,expectedVersion:current.version});CORRELATIONS=CORRELATIONS.map(r=>r._id===selectedCorrId?normalizeCorrelations([saved])[0]:r);}else{const saved=await dataClient.createCorrelation(x);const normalized=normalizeCorrelations([saved])[0];CORRELATIONS.push(normalized);selectedCorrId=normalized._id;}refreshProductSelects();renderCorrelations(byId('corrSearch').value);}catch(error){alert(error.message||'EK-11 kaydı güncellenemedi.');}};
-byId('corrDelete').onclick=async()=>{if(!isAuthorized()||!selectedCorrId)return;const current=CORRELATIONS.find(r=>r._id===selectedCorrId);if(!current)return;try{await dataClient.deleteCorrelation(current.id,current.version);CORRELATIONS=CORRELATIONS.filter(r=>r._id!==selectedCorrId);clearCorrForm();refreshProductSelects();}catch(error){alert(error.message||'EK-11 kaydı silinemedi.');}};
+byId('corrUpdate').onclick=async()=>{
+  if(!isAuthorized())return;
+  const input=corrForm();
+  if(!input.product){setCorrSaveState('Ürün adı zorunludur.','bad');return;}
+  if((input.aRate!==null&&!Number.isFinite(input.aRate))||(input.bRate!==null&&!Number.isFinite(input.bRate))){setCorrSaveState('Fire oranlarını sayısal girin.','bad');return;}
+  byId('corrUpdate').disabled=true;
+  setCorrSaveState('Yayınlanıyor...');
+  try{
+    if(selectedCorrId){
+      const current=CORRELATIONS.find(row=>row._id===selectedCorrId);
+      const saved=await dataClient.updateCorrelation(current.id,{...input,expectedVersion:current.version});
+      CORRELATIONS=CORRELATIONS.map(row=>row._id===selectedCorrId?normalizeCorrelations([saved])[0]:row);
+    }else{
+      const saved=await dataClient.createCorrelation(input);
+      const normalized=normalizeCorrelations([saved])[0];
+      CORRELATIONS.push(normalized);
+      selectedCorrId=normalized._id;
+    }
+    refreshProductSelects();renderCorrelations(byId('corrSearch').value);
+    setCorrSaveState('EK-11 değişikliği kaydedildi ve tüm kullanıcılara yayınlandı.','ok');
+    renderAuditHistory();
+  }catch(error){setCorrSaveState(error.message||'EK-11 kaydı güncellenemedi.','bad');}
+  finally{byId('corrUpdate').disabled=false;}
+};
+byId('corrDelete').onclick=async()=>{
+  if(!isAuthorized()||!selectedCorrId){setCorrSaveState('Önce listeden bir EK-11 kaydı seçin.','bad');return;}
+  const current=CORRELATIONS.find(row=>row._id===selectedCorrId);
+  if(!current||!confirm(`${current.product} EK-11 kaydını silmek istediğinize emin misiniz?`))return;
+  byId('corrDelete').disabled=true;
+  setCorrSaveState('Siliniyor...');
+  try{
+    await dataClient.deleteCorrelation(current.id,current.version);
+    CORRELATIONS=CORRELATIONS.filter(row=>row._id!==selectedCorrId);
+    selectedCorrId=null;
+    ['corrProduct','corrGtip','corrYear','corrCorrGtip','corrA','corrB'].forEach(id=>byId(id).value='');
+    refreshProductSelects();renderCorrelations(byId('corrSearch').value);
+    setCorrSaveState('EK-11 kaydı silindi ve değişiklik tüm kullanıcılara yayınlandı.','ok');
+    renderAuditHistory();
+  }catch(error){setCorrSaveState(error.message||'EK-11 kaydı silinemedi.','bad');}
+  finally{byId('corrDelete').disabled=false;}
+};
 byId('dataLogout').onclick=()=>{dataClient.logout();byId('dataPanel').classList.add('hidden');renderAuthState();};
-byId('corrExcel').onchange=e=>{if(e.target.files?.length)alert('V6 web önizlemesinde EK-11 mevcut dosyası sisteme gömülüdür. Yeni XLSX aktarımı masaüstü veri merkezine bağlandığında kalıcı olarak işlenecektir.');e.target.value='';};
 
 if(!byId('fEntryDate').value) byId('fEntryDate').value='2024-06-28';
 if(!byId('f90EntryDate').value) byId('f90EntryDate').value='2026-05-01';
