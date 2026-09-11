@@ -9,7 +9,8 @@ const css = fs.readFileSync(path.join(root, 'styles.css'), 'utf8');
 
 test('üstte yalnız sarı marka alanı ve küçük sistem adı kalır', () => {
   assert.doesNotMatch(html, /class="windowbar"|SEYMEN Hesaplama Merkezi<\/b>/);
-  assert.doesNotMatch(html, /Ş\. Melih KARABAY için özenle hazırlanmıştır\./);
+  assert.match(html, /class="subtitle">Ş\. Melih KARABAY için özenle hazırlanmıştır\.<\/div>/);
+  assert.match(html, /class="brand-heading"/);
   assert.match(html, /class="brand-system-name">Fire\/Tonaj Hesaplama Sistemi<\/div>/);
   assert.match(css, /\.brand-lockup/);
   assert.match(css, /\.brand-system-name/);
