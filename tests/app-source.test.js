@@ -23,3 +23,9 @@ test('şifre doğrulaması ve yayınlanan veri kaydı geçici tarayıcı deposun
   assert.match(app, /dataClient\.updateProduct\(/);
   assert.match(app, /dataClient\.updateCorrelation\(/);
 });
+
+test('yetkili ürün satırını çift tıklayarak editörü açar', () => {
+  assert.match(app, /productRows'\)\.addEventListener\('dblclick'/);
+  assert.match(app, /productAdmin'\)\.classList\.remove\('hidden'\)/);
+  assert.doesNotMatch(app, /adminFireRate/);
+});

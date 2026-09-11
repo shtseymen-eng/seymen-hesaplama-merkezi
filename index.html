@@ -8,14 +8,10 @@
 </head>
 <body>
   <div class="app-shell">
-    <header class="windowbar">
-      <div class="window-title"><span class="dots">● ● ●</span><b>SEYMEN Hesaplama Merkezi</b></div>
-    </header>
-
     <section class="brandbar">
-      <div>
+      <div class="brand-lockup">
         <div class="brand">SEYMEN</div>
-        <div class="subtitle">Ş. Melih KARABAY için özenle hazırlanmıştır.</div>
+        <div class="brand-system-name">Fire/Tonaj Hesaplama Sistemi</div>
       </div>
       <div class="brand-actions">
         <div id="syncBadge" class="sync-badge">☁ Eşitlendi</div>
@@ -28,7 +24,7 @@
 
     <div id="sourceWarning" class="source-warning hidden">
       <b>⚠ Hesaplama verilerinde hata olabilir.</b>
-      <span>2 kullanıcı verisi çekilmektedir.</span>
+      <span>Ortak veri hizmetine ulaşılamadı.</span>
       <small id="sourceWarningDetail"></small>
     </div>
 
@@ -205,7 +201,7 @@
       </section>
 
       <section id="page-products" class="page">
-        <div class="hero"><div><h1>Ürünler</h1><p>Masaüstü ana verisinden web tarafına gelen ürün ve yoğunluk listesini görüntüleyin.</p></div></div>
+        <div class="hero"><div><h1>Ürünler</h1><p>Hesaplamalarda kullanılan ürün ve yoğunluk listesini görüntüleyin.</p></div></div>
         <div class="card">
           <div class="toolbar">
             <input id="productSearch" placeholder="Ürün ara...">
@@ -215,17 +211,17 @@
             <div class="admin-grid">
               <label>Ürün Adı<input id="adminName" type="text" placeholder="Ürün adı"></label>
               <label>Yoğunluk (kg/L)<input id="adminDensity" type="number" step="0.0001" placeholder="0,0000"></label>
-              <label>90+ Günlük Fire Oranı (%)<input id="adminFireRate" type="number" step="0.001" placeholder="0,002"></label>
             </div>
             <div class="admin-actions">
               <button id="adminAdd" class="primary">Ürün Ekle</button>
-              <button id="adminUpdate" class="secondary">Seçileni Güncelle</button>
+              <button id="adminUpdate" class="secondary">Kaydet</button>
               <button id="adminDelete" class="danger">Seçileni Sil</button>
             </div>
-            <div class="readonly-note">Bu değişiklikler yalnızca bu sekmede geçerlidir. Sekme kapanınca ana masaüstü verisi geri gelir.</div>
+            <div id="productSaveState" class="save-state" role="status" aria-live="polite"></div>
+            <div class="readonly-note">Kaydettiğiniz ürün ve yoğunluk değişikliği tüm kullanıcılara yayınlanır.</div>
           </div>
           <div class="table-wrap"><table><thead><tr><th class="admin-col hidden">Seç</th><th>Ürün</th><th>Yoğunluk (kg/L)</th><th>90+ Günlük Fire (%)</th></tr></thead><tbody id="productRows"></tbody></table></div>
-          <div class="readonly-note">Web tarafında ürün listesi salt okunur. Kalıcı ana veri masaüstü uygulamasından yönetilecektir.</div>
+          <div class="readonly-note">Yetkili girişi yaptıktan sonra düzenlemek istediğiniz ürün satırına çift tıklayın.</div>
         </div>
       </section>
 
@@ -258,7 +254,7 @@
           <input id="corrB" type="number" step="0.0001" placeholder="B FİRE %">
         </div>
         <div class="table-wrap corr-table-wrap"><table class="corr-table"><thead><tr><th>ÜRÜN ADI</th><th>GÜNCEL GTIP NO</th><th>KOLERASYON YIL</th><th>KOLERASYON GTIP NO</th><th>( A )1 GÜNCEL FİRE ORANI %</th><th>( B )2 GÜNCEL FİRE ORANI %</th></tr></thead><tbody id="corrRows"></tbody></table></div>
-        <div class="readonly-note">Değişiklikler bu web prototipinde yetkili oturum boyunca geçerlidir. Kalıcı merkez masaüstü uygulamasıdır.</div>
+        <div class="readonly-note">Güncellediğiniz EK-11 kaydı tüm kullanıcılara yayınlanır.</div>
       </div>
     </div>
   </div>

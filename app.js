@@ -313,7 +313,8 @@ byId('clearHistory').onclick=()=>{localStorage.removeItem(historyKey);renderHist
 function renderProducts(filter=''){
   const q=filter.trim().toLocaleUpperCase('tr-TR');
   const rows=PRODUCTS.filter(p=>p.name.toLocaleUpperCase('tr-TR').includes(q));
-  byId('productRows').innerHTML=rows.map(p=>`<tr><td>${p.name}</td><td>${fmt(p.density,4)}</td><td>%${fmt(Number(p.fireRate??0.002),3)}</td></tr>`).join('');
+  const auth=isAuthorized();
+  byId('productRows').innerHTML=rows.map(p=>`<tr class="${p.id===selectedProductId?'selected':''}" data-product-id="${p.id}">${auth?`<td class="admin-col"><input class="select-product" type="radio" name="prodsel" ${p.id===selectedProductId?'checked':''}></td>`:''}<td>${p.name}</td><td>${fmt(p.density,4)}</td><td>%${fmt(Number(p.fireRate??0.002),3)}</td></tr>`).join('');
   byId('productCount').textContent=`${rows.length} / ${PRODUCTS.length} ürün`;
 }
 byId('productSearch').addEventListener('input',e=>renderProducts(e.target.value));
@@ -334,6 +335,42 @@ function renderSourceState(source='network'){
 
 let selectedProductId=null;
 
+function setProductSaveState(message,type=''){
+  const state=byId('productSaveState');
+  state.textContent=message;
+  state.className=`save-state ${type}`.trim();
+}
+
+function selectProduct(productId){
+  selectedProductId=Number(productId);
+  const product=PRODUCTS.find(item=>item.id===selectedProductId);
+  if(!product)return;
+  byId('adminName').value=product.name;
+  byId('adminDensity').value=product.density;
+  setProductSaveState('');
+  byId('productRows').querySelectorAll('tr[data-product-id]').forEach(row=>{
+    const selected=Number(row.dataset.productId)===selectedProductId;
+    row.classList.toggle('selected',selected);
+    const radio=row.querySelector('.select-product');
+    if(radio)radio.checked=selected;
+  });
+}
+
+byId('productRows').addEventListener('click',event=>{
+  if(!isAuthorized())return;
+  const row=event.target.closest('tr[data-product-id]');
+  if(row)selectProduct(row.dataset.productId);
+});
+
+byId('productRows').addEventListener('dblclick',event=>{
+  if(!isAuthorized())return;
+  const row=event.target.closest('tr[data-product-id]');
+  if(!row)return;
+  selectProduct(row.dataset.productId);
+  byId('productAdmin').classList.remove('hidden');
+  byId('adminDensity').focus();
+});
+
 function isAuthorized(){
   return dataClient.isAuthorized();
 }
@@ -351,9 +388,9 @@ function renderAuthState(){
   const on=isAuthorized();
   byId('authOpen').classList.toggle('hidden',on);
   byId('authLogout').classList.toggle('hidden',!on);
-  byId('productAdmin').classList.add('hidden');
+  if(!on)byId('productAdmin').classList.add('hidden');
   document.querySelectorAll('.admin-col').forEach(el=>el.classList.toggle('hidden',!on));
-  byId('authOpen').textContent=on?'Geçici Yetkili Modu':'Yetkili Modu Aç';
+  byId('authOpen').textContent='Yetkili Modu Aç';
   renderProducts(byId('productSearch').value||'');
 }
 
@@ -382,57 +419,53 @@ byId('adminAdd').onclick=async()=>{
   if(!isAuthorized())return;
   const name=byId('adminName').value.trim();
   const den=Number(byId('adminDensity').value);
-  if(!name||!Number.isFinite(den)||den<=0){alert('Geçerli ürün adı ve yoğunluk girin.');return;}
-  if(PRODUCTS.some(p=>p.name.toLocaleUpperCase('tr-TR')===name.toLocaleUpperCase('tr-TR'))){alert('Bu ürün zaten mevcut.');return;}
+  if(!name||!Number.isFinite(den)||den<=0){setProductSaveState('Geçerli ürün adı ve yoğunluk girin.','bad');return;}
+  if(PRODUCTS.some(p=>p.name.toLocaleUpperCase('tr-TR')===name.toLocaleUpperCase('tr-TR'))){setProductSaveState('Bu ürün zaten mevcut.','bad');return;}
+  byId('adminAdd').disabled=true;
+  setProductSaveState('Yayınlanıyor...');
   try{
     const saved=await dataClient.createProduct({name,density:den});
     PRODUCTS=[...PRODUCTS,saved].sort((a,b)=>a.name.localeCompare(b.name,'tr'));
     selectedProductId=saved.id;refreshProductSelects();renderProducts();
-  }catch(error){alert(error.message||'Ürün kaydedilemedi.');}
+    setProductSaveState('Ürün kaydedildi ve tüm kullanıcılara yayınlandı.','ok');
+  }catch(error){setProductSaveState(error.message||'Ürün kaydedilemedi.','bad');}
+  finally{byId('adminAdd').disabled=false;}
 };
 
 byId('adminUpdate').onclick=async()=>{
-  if(!isAuthorized()||!selectedProductId){alert('Önce listeden bir ürün seçin.');return;}
+  if(!isAuthorized()||!selectedProductId){setProductSaveState('Önce listeden bir ürün seçin.','bad');return;}
   const current=PRODUCTS.find(p=>p.id===selectedProductId);
   if(!current)return;
   const name=byId('adminName').value.trim();
   const den=Number(byId('adminDensity').value);
-  if(!name||!Number.isFinite(den)||den<=0){alert('Geçerli ürün adı ve yoğunluk girin.');return;}
+  if(!name||!Number.isFinite(den)||den<=0){setProductSaveState('Geçerli ürün adı ve yoğunluk girin.','bad');return;}
+  byId('adminUpdate').disabled=true;
+  setProductSaveState('Yayınlanıyor...');
   try{
     const saved=await dataClient.updateProduct(current.id,{name,density:den,expectedVersion:current.version});
     PRODUCTS=PRODUCTS.map(p=>p.id===current.id?saved:p);
     refreshProductSelects();renderProducts();
-  }catch(error){alert(error.message||'Ürün güncellenemedi.');}
+    setProductSaveState('Değişiklik kaydedildi ve tüm kullanıcılara yayınlandı.','ok');
+  }catch(error){setProductSaveState(error.message||'Ürün güncellenemedi.','bad');}
+  finally{byId('adminUpdate').disabled=false;}
 };
 
 byId('adminDelete').onclick=async()=>{
-  if(!isAuthorized()||!selectedProductId){alert('Önce listeden bir ürün seçin.');return;}
+  if(!isAuthorized()||!selectedProductId){setProductSaveState('Önce listeden bir ürün seçin.','bad');return;}
   const current=PRODUCTS.find(p=>p.id===selectedProductId);
   if(!current)return;
+  if(!confirm(`${current.name} ürününü silmek istediğinize emin misiniz?`))return;
+  byId('adminDelete').disabled=true;
+  setProductSaveState('Siliniyor...');
   try{
     await dataClient.deleteProduct(current.id,current.version);
     PRODUCTS=PRODUCTS.filter(p=>p.id!==current.id);
     selectedProductId=null;byId('adminName').value='';byId('adminDensity').value='';
     refreshProductSelects();renderProducts();
-  }catch(error){alert(error.message||'Ürün silinemedi.');}
+    setProductSaveState('Ürün silindi ve değişiklik tüm kullanıcılara yayınlandı.','ok');
+  }catch(error){setProductSaveState(error.message||'Ürün silinemedi.','bad');}
+  finally{byId('adminDelete').disabled=false;}
 };
-
-const originalRenderProducts=renderProducts;
-renderProducts=function(filter=''){
-  const q=filter.trim().toLocaleUpperCase('tr-TR');
-  const rows=PRODUCTS.filter(p=>p.name.toLocaleUpperCase('tr-TR').includes(q));
-  const auth=isAuthorized();
-  byId('productRows').innerHTML=rows.map(p=>`<tr class="${p.id===selectedProductId?'selected':''}" data-product-id="${p.id}">${auth?`<td class="admin-col"><input class="select-product" type="radio" name="prodsel" ${p.id===selectedProductId?'checked':''}></td>`:''}<td>${p.name}</td><td>${fmt(p.density,4)}</td><td>%${fmt(Number(p.fireRate??0.002),3)}</td></tr>`).join('');
-  byId('productCount').textContent=`${rows.length} / ${PRODUCTS.length} ürün`;
-  if(auth){
-    byId('productRows').querySelectorAll('tr').forEach(tr=>tr.addEventListener('click',()=>{
-      selectedProductId=Number(tr.dataset.productId);
-      const p=PRODUCTS.find(x=>x.id===selectedProductId);
-      if(p){byId('adminName').value=p.name;byId('adminDensity').value=p.density;byId('adminFireRate').value=Number(p.fireRate??0.002);}
-      renderProducts(byId('productSearch').value||'');
-    }));
-  }
-}
 
 
 // V6 EK-11 yetkili veri yönetimi
