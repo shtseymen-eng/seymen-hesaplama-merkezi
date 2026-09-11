@@ -1,6 +1,7 @@
 # Geçici çalışma ve analiz dosyaları
 work/
 scratch/
+.worktrees/
 
 # Bağımlılıklar ve derlemeler
 node_modules/
