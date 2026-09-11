@@ -94,6 +94,10 @@ Genel veri okuma uçları herkese açıktır. Ekleme, güncelleme, silme ve geç
 
 Mevcut görünüm ve hesaplama alanları korunur. Yeni arayüz yalnız gerekli kontrolleri ekler:
 
+- Açık gri `SEYMEN Hesaplama Merkezi` pencere çubuğu tamamen kaldırılır.
+- Sarı SEYMEN marka alanı sayfanın en üstünde kalır.
+- `Ş. Melih KARABAY için özenle hazırlanmıştır.` alt yazısı kaldırılır.
+- Büyük `SEYMEN` yazısının yanında daha küçük puntoda `Fire/Tonaj Hesaplama Sistemi` yazısı gösterilir.
 - Ürün satırında yetkiliye özel çift tıklama davranışı
 - Sade ürün düzenleme alanı ve `Kaydet` düğmesi
 - Kayıt sırasında `Kaydediliyor`, başarıda `Yayınlandı`, hatada açık hata durumu
