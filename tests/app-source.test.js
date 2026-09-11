@@ -6,6 +6,7 @@ const path = require('node:path');
 const root = path.join(__dirname, '..');
 const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
 const app = fs.readFileSync(path.join(root, 'app.js'), 'utf8');
+const config = fs.readFileSync(path.join(root, 'site-config.js'), 'utf8');
 
 test('uygulama ortak veri istemcisini hesaplama kodundan önce yükler', () => {
   const configIndex = html.indexOf('<script src="site-config.js"></script>');
@@ -15,6 +16,7 @@ test('uygulama ortak veri istemcisini hesaplama kodundan önce yükler', () => {
   assert.ok(clientIndex > configIndex);
   assert.ok(appIndex > clientIndex);
   assert.match(app, /dataClient\.loadData\(\)/);
+  assert.match(config, /https:\/\/seymen-hesaplama-veri\.[a-z0-9]+\.chatgpt\.site/);
 });
 
 test('şifre doğrulaması ve yayınlanan veri kaydı geçici tarayıcı deposunda yapılmaz', () => {

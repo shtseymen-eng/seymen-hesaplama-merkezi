@@ -1,3 +1,3 @@
 window.SEYMEN_CONFIG = Object.freeze({
-  apiBaseUrl: ''
+  apiBaseUrl: 'https://seymen-hesaplama-veri.pfynv487qd.chatgpt.site'
 });
