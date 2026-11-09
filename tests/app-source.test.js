@@ -10,7 +10,7 @@ const config = fs.readFileSync(path.join(root, 'site-config.js'), 'utf8');
 
 test('uygulama ortak veri istemcisini hesaplama kodundan önce yükler', () => {
   const configIndex = html.indexOf('<script src="site-config.js"></script>');
-  const clientIndex = html.indexOf('<script src="data-client.js"></script>');
+  const clientIndex = html.indexOf('<script src="data-client.js?v=5d6ff0d"></script>');
   const appIndex = html.indexOf('<script src="app.js"></script>');
   assert.ok(configIndex >= 0);
   assert.ok(clientIndex > configIndex);
