@@ -45,6 +45,23 @@ test('başarılı ortak veri yanıtını önbelleğe alır ve çevrimdışıyken
   assert.deepEqual(cached.correlations, data.correlations);
 });
 
+test('önbelleğe yazılamasa da geçerli ortak veri yanıtını kullanır', async () => {
+  const { create } = require(clientPath);
+  const data = {
+    products: [{ id: 1, name: 'TEST', density: 0.8, version: 1 }],
+    correlations: [{ id: 1, product: 'TEST', aRate: 0.4, bRate: 0.002 }]
+  };
+  for (const cacheError of [new DOMException('Quota exceeded', 'QuotaExceededError'), new DOMException('Storage denied', 'SecurityError')]) {
+    const storage = memoryStorage();
+    storage.setItem = () => { throw cacheError; };
+    const client = create({ baseUrl: 'https://api.test', fetch: () => jsonResponse(data), storage, sessionStorage: memoryStorage() });
+    const result = await client.loadData();
+    assert.equal(result.source, 'network');
+    assert.deepEqual(result.products, data.products);
+    assert.deepEqual(result.correlations, data.correlations);
+  }
+});
+
 test('yetkili girişinde yalnız süreli oturum belirtecini saklar', async () => {
   assert.equal(fs.existsSync(clientPath), true, 'data-client.js henüz yok');
   const { create } = require(clientPath);

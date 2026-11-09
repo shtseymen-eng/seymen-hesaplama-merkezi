@@ -57,7 +57,8 @@
             throw new DataClientError('invalid_data', 'Ortak veri yanıtı geçersiz.');
           }
           const cached = { products: payload.products, correlations: payload.correlations };
-          storage.setItem(CACHE_KEY, JSON.stringify(cached));
+          // Caching is optional; storage restrictions must not discard fresh service data.
+          try { storage.setItem(CACHE_KEY, JSON.stringify(cached)); } catch {}
           return { ...cached, source: 'network' };
         } catch (error) {
           try {
